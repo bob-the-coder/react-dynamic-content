@@ -1,6 +1,6 @@
 import React from 'react';
 import demo from '../Demo';
-import { Form, Panel, InputGroup, InputNumber, RadioGroup, Radio } from 'rsuite';
+import { Form, InputGroup, InputNumber, RadioGroup, Radio } from 'rsuite';
 
 const fontWeights = [ 'Normal', 'Bold' ];
 const colors = [ 'White', 'Black', 'Red', 'Blue', 'Green' ];
@@ -14,7 +14,7 @@ export default function FontOptionsEditor({ element, manager, onUpdate }) {
     }
 
     return (
-        <div>
+        <>
             <Form.Group>
                 <Form.ControlLabel>Size</Form.ControlLabel>
                 <InputGroup>
@@ -38,6 +38,6 @@ export default function FontOptionsEditor({ element, manager, onUpdate }) {
                     ))}
                 </RadioGroup>
             </Form.Group>
-        </div>
+        </>
     )
 }

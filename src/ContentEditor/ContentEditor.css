@@ -76,12 +76,12 @@
 
 .element-editor--container,
 .element-view--container {
-    --element-color: grey;
+    --element-color: rgb(70, 70, 70);
 }
 
 .element-editor--text,
 .element-view--text {
-    --element-color: magenta;
+    --element-color: rgb(0, 135, 180);
 }
 
 .element-editor--image,
@@ -91,7 +91,7 @@
 
 .element-editor--list,
 .element-view--list {
-    --element-color: brown;
+    --element-color: orange;
 }
 
 .element-editor--name {
@@ -125,4 +125,21 @@
 .element-editor-btn:hover {
     color: white;
     background-color: var(--element-color);
+}
+
+.element-editor .rs-nav-item:hover,
+.element-editor .rs-nav-item-active {
+    color: var(--element-color) !important;
+}
+
+.element-editor .rs-nav-item-active::before {
+    background-color: var(--element-color) !important;
+}
+
+.element-editor .rs-input-group:hover,
+.element-editor .rs-input-group:focus-within,
+.element-editor .rs-input:focus, 
+.element-editor .rs-input:hover:not(:disabled) {
+    border-color: var(--element-color) !important;
+    outline-color: var(--element-color) !important;
 }

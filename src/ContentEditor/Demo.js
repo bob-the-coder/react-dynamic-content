@@ -123,7 +123,16 @@ demoManager.configure(ElementType.Text, {
 demoManager.configure(ElementType.Image, {
     elementFactory: () => new ImageElement({}),
     editorsProvider: (element, onUpdate) => [
-        <ImageEditor manager={demoManager} element={element} onUpdate={onUpdate} />
+        <MultiEditor manager={demoManager} element={element} onUpdate={onUpdate} editors={[
+            {
+                name: 'Image Settings',
+                editor: (element, manager, onUpdate) => <ImageEditor manager={demoManager} element={element} onUpdate={onUpdate} />
+            },
+            {
+                name: 'Padding Settings',
+                editor: (element, manager, onUpdate) => <PaddingOptionsEditor manager={manager} element={element} onUpdate={onUpdate} />
+            }
+        ]}/>
     ],
     viewerProvider: (element) => <ImageViewer manager={demoManager} element={element} />,
     actionsProvider: (element, onUpdate) => [
@@ -133,9 +142,21 @@ demoManager.configure(ElementType.Image, {
 
 demoManager.configure(ElementType.List, {
     elementFactory: () => new ListElement({}),
-    editorsProvider: (element, onUpdate) =>  [
-        <ListEditor manager={demoManager} element={element} onUpdate={onUpdate} />,
-        <FontOptionsEditor manager={demoManager} element={element} onUpdate={onUpdate} />
+    editorsProvider: (element, onUpdate) => [
+        <MultiEditor manager={demoManager} element={element} onUpdate={onUpdate} editors={[
+            {
+                name: 'List Settings',
+                editor: (element, manager, onUpdate) => <ListEditor manager={demoManager} element={element} onUpdate={onUpdate} />
+            },
+            {
+                name: 'Font Settings',
+                editor: (element, manager, onUpdate) => <FontOptionsEditor manager={manager} element={element} onUpdate={onUpdate} />
+            },
+            {
+                name: 'Padding Settings',
+                editor: (element, manager, onUpdate) => <PaddingOptionsEditor manager={manager} element={element} onUpdate={onUpdate} />
+            }
+        ]}/>
     ],
     viewerProvider: (element) => <ListViewer manager={demoManager} element={element} />,
     actionsProvider: (element, onUpdate) => [

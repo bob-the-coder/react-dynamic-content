@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Input, Panel } from 'rsuite';
+import { Form, Input } from 'rsuite';
 
 export default function ImageEditor({element, manager, onUpdate}) {
   function updateUrl(url) {
@@ -13,7 +13,7 @@ export default function ImageEditor({element, manager, onUpdate}) {
   }
 
   return (
-    <Panel header="Image Settings">
+    <>
       <Form.Group>
           <Form.ControlLabel>Url</Form.ControlLabel>
           <Input value={element.url} onChange={updateUrl} />
@@ -22,6 +22,6 @@ export default function ImageEditor({element, manager, onUpdate}) {
           <Form.ControlLabel>Placeholder</Form.ControlLabel>
           <Input value={element.alt} onChange={updateAlt} />
       </Form.Group>
-    </Panel>
+    </>
   )
 }

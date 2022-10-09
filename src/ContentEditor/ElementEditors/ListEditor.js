@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Form, Input, InputGroup, Panel, RadioGroup, Radio } from 'rsuite';
+import { Form, Input, InputGroup, RadioGroup, Radio } from 'rsuite';
 import InputGroupButton from 'rsuite/esm/InputGroup/InputGroupButton';
 
 export default function ListEditor({ element, manager, onUpdate }) {
-  const [ orderType, setOrderType ] = useState('Ordered');
+  const [ orderType, setOrderType ] = useState(element.ordered ? 'Ordered' : 'Unordered');
 
   function updateElement(newElement) {
     manager.updateElement({...element, ...newElement});
@@ -43,7 +43,7 @@ export default function ListEditor({ element, manager, onUpdate }) {
   }
 
   return (
-    <Panel header="List Settings">
+    <>
       <Form.Group>
           <RadioGroup inline={true} onChange={updateOrderType} value={orderType}>
             <Radio value='Ordered'>Ordered</Radio>
@@ -51,6 +51,6 @@ export default function ListEditor({ element, manager, onUpdate }) {
           </RadioGroup>
         </Form.Group>
       {element.items.map(renderItemEditor)}
-    </Panel>
+    </>
   )
 }
