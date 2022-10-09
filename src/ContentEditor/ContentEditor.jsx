@@ -1,21 +1,19 @@
 import React, { Component } from 'react';
-import ContentManager from './ContentManager';
 import ContainerEditor from './ElementEditors/ContainerEditor';
 import ContainerViewer from './ElementViewers/ContainerViewer';
 
 import './ContentEditor.css';
-import demo from './DemoTree';
 import SimpleBar from 'simplebar-react';
 import "simplebar/src/simplebar.css";
 
 export default class ContentEditor extends Component {
-  constructor(){
+  constructor(props){
     super();
 
-    this.manager = new ContentManager({ model: demo.model });
+    this.manager = props.manager;
     window.manager = this.manager;
     this.state = {
-      model: null
+      root: null
     }
   }
 
@@ -25,23 +23,29 @@ export default class ContentEditor extends Component {
 
   onUpdate() {
     this.setState({
-      model: this.manager.build()
-    })
+      root: this.manager.build()
+    });
+    if (typeof this.props.onChange !== 'function') return;
+
+    this.props.onChange(this.state.root);
   }
 
   render() {
-    let model = this.state.model;
-    if (!model) return;
+    let root = this.state.root;
+    if (!root) return;
+
+    const editor = this.manager.getEditors(root, this.onUpdate.bind(this));
+    const viewer = this.manager.getViewer(root, this.onUpdate.bind(this));
 
     return (
       <div className='content-editor'>
         <h1>Content editor proof of concept</h1>
         <div className='workspace'>
           <SimpleBar style={{maxHeight: '80vh'}} className='workspace-editor'>
-            <ContainerEditor model={model} manager={this.manager} onUpdate={this.onUpdate.bind(this)} />
+            {editor}
           </SimpleBar>
           <SimpleBar className='workspace-viewer'>
-            <ContainerViewer model={model} manager={this.manager} />
+            {viewer}
           </SimpleBar>
         </div>
       </div>

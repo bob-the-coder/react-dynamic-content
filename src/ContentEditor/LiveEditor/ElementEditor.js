@@ -2,9 +2,9 @@ import React from 'react';
 import { ElementTypeName } from '../ContentModel';
 import EditorButton from '../EditorButton';
 
-export default function ElementEditor({ model, manager, children, actions, onUpdate }) {
+export default function ElementEditor({ element, manager, onUpdate, children }) {
     function highlight() {
-        manager.highlight(model);
+        manager.highlight(element);
         onUpdate()
     }
 
@@ -13,14 +13,16 @@ export default function ElementEditor({ model, manager, children, actions, onUpd
         onUpdate();
     }
 
-    function renderAction({ buttonVariant, textLabel, handler }, index) {
-        return <EditorButton key={index} value={textLabel} variant={buttonVariant || 'default'} onClick={handler} />
+    function renderAction(action, index) {
+        let {textLabel, handler} = action;
+        return <EditorButton key={index} value={textLabel} variant='default' onClick={handler} />
     }
-
-    const elementType = ElementTypeName[model.type];
+    
+    const elementType = ElementTypeName[element.type];
+    let actions = manager.getActions(element, onUpdate);
 
     return (
-        <div className={`element-editor element-editor--${elementType.toLowerCase()}`}
+        <div key={element.id} className={`element-editor element-editor--${elementType.toLowerCase()}`}
             onMouseLeave={removeHighlight}
             onMouseEnter={highlight}
         >

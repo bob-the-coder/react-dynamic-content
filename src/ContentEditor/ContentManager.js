@@ -1,19 +1,62 @@
-import { Container, ElementType } from './ContentModel';
+import React from 'react';
+import { Container, ElementType, ElementTypeName } from './ContentModel';
+import ElementEditor from './LiveEditor/ElementEditor';
+import ElementView from './LiveEditor/ElementView';
 
 export default class ContentManager {
-
     constructor(options) {
         this.elements = [new Container({})];
+        this.config = {}
         if (options && options.model) {
             this.elements = this.parse(options.model, null);
         }
     }
 
+    configure(elementType, { elementFactory, editorsProvider, viewerProvider, actionsProvider }) {
+        if (this.config[elementType]) throw new Error(`Element ${ElementTypeName[elementType]} is already configured.`);
+        
+        this.config[elementType] = {
+            elementFactory,
+            editorsProvider,
+            viewerProvider,
+            actionsProvider
+        };
+    }
+
+    getEditors(element, onUpdate) {
+        if (!element) throw new Error("Element is null.");
+        if (!element.id) throw new Error("element doesn't have an id.");
+        if (!ElementTypeName[element.type]) throw new Error("element is not a valid element. Missing type.");
+
+        return (
+            <ElementEditor element={element} manager={this} onUpdate={onUpdate}>
+                {this.config[element.type].editorsProvider(element, onUpdate)}
+            </ElementEditor>
+        )
+    }
+
+    getViewer(element, onUpdate) {
+        return (
+            <ElementView element={element} manager={this} onUpdate={onUpdate}>
+                {this.config[element.type].viewerProvider(element, this)}
+            </ElementView>
+        );
+    }
+
+    getActions(element, onUpdate) {
+        return this.config[element.type].actionsProvider(element, onUpdate);
+    }
+
     parse(element, parentId) {
         if (!element) return [];
-        if (element.type !== ElementType.Container) return [ { ...element, parentId } ];
 
-        let elementTree = [ {...element, parentId, children: []} ];
+        let instance = element;
+        if (instance.type !== ElementType.Container) {
+            
+            return [ { ...instance, parentId } ]
+        };
+
+        let elementTree = [ {...instance, parentId, children: []} ];
         for (let i = 0; i < element.children.length; i++) {
             elementTree = elementTree.concat(this.parse(element.children[i], element.id));
         }
@@ -23,25 +66,26 @@ export default class ContentManager {
 
     findById(id) {
         var matches = this.elements.filter(element => element.id === id);
-        if (matches.length !== 1) throw new Error("There is more than one item with this id.");
+        if (matches.length !== 1) throw new Error(`There is more than one item with this id. (id: ${id})`);
         return matches[0];
     }
 
-    addElement(parent, element) {
+    addElement(parent, elementType) {
         if (!parent) throw new Error(`Container element is missing.`);
-        if (element.id === parent.id) throw new Error("Cannot place element within itself.");
-
+        
         parent = this.findById(parent.id);
         if (!parent) throw new Error(`Element ${parent.id} not found.`);
         if (parent.type !== ElementType.Container) throw new Error(`Element ${parent.id} is not a container.`);
 
-        element.parentId = parent.id;
-        this.elements.push(element);
+        this.elements.push({
+            ...this.config[elementType].elementFactory(),
+            parentId: parent.id
+        });
     }
 
     removeById(elementId) {
-        let element = this.findById(element.id);
-        if (!element) throw new Error(`Element ${element.id} not found.`);
+        let element = this.findById(elementId);
+        if (!element) throw new Error(`Element ${elementId} not found.`);
 
         this.elements.splice(this.elements.indexOf(element), 1);
     }
@@ -52,7 +96,7 @@ export default class ContentManager {
 
         let children = this.findChildren(element.id);
         for (let i = 0; i < children.length; i++) {
-            this.removeByElement(children[i]);
+            this.removeElement(children[i]);
         }
 
         if (!this.elements.length) this.elements.push(new Container({}));
@@ -88,7 +132,7 @@ export default class ContentManager {
         if (container.children.length === 0) return container;
 
         for (let i = 0; i < container.children.length; i++) {
-            let element = container.children[i]
+            let element = container.children[i];
             if (element.type !== ElementType.Container) continue;
             container.children[i] = this.buildContainer(element.id);
         }
@@ -97,7 +141,7 @@ export default class ContentManager {
     }
 
     build() {
-        // console.log(this.elements);
+        //console.log(this.elements);
         // console.log(contentTree);
 
         return this.buildContainer(this.elements[0].id);

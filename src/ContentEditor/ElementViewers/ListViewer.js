@@ -1,13 +1,12 @@
 import React from 'react';
-import ElementView from '../LiveEditor/ElementView';
-import demo from '../DemoTree.js';
+import demo from '../Demo.js';
 
-export default function ListViewer({ model, manager }) {
-  let fontOptions = {...demo.fontOptions, ...model.fontOptions};
+export default function ListViewer({ element }) {
+  let fontOptions = {...demo.fontOptions, ...element.fontOptions};
 
   return (
-    <ElementView model={model} manager={manager}>
-      {model.items.map((text, index) => <div key={index} style={fontOptions}>{text}</div>)}
-    </ElementView>
+    <div>
+      {element.items.map((text, index) => <div key={index} style={fontOptions}>{text}</div>)}
+    </div>
   )
 }

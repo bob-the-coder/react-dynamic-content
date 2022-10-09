@@ -1,30 +1,29 @@
 import React from 'react';
-import ElementEditor from '../LiveEditor/ElementEditor';
 import TextInput from '../TextInput';
 import FontOptionsEditor from './FontOptionsEditor';
 
-export default function ListEditor({ model, manager, onUpdate }) {
+export default function ListEditor({ element, manager, onUpdate }) {
   function updateElement(items) {
-    manager.updateElement({...model, items});
+    manager.updateElement({...element, items});
     onUpdate();
   }
 
   function addItem() {
-    let items = model.items;
+    let items = element.items;
     items.push('');
 
     updateElement(items);
   }
 
   function removeItem(index) {
-    let items = model.items;
+    let items = element.items;
     items.splice(index, 1);
 
     updateElement(items);
   }
 
   function updateItem(index, value) {
-    let items = model.items;
+    let items = element.items;
     items[index] = value;
 
     updateElement(items);
@@ -41,18 +40,12 @@ export default function ListEditor({ model, manager, onUpdate }) {
     )
   }
 
-  const actions = [
-    { textLabel: 'Add Item', handler: addItem }
-  ];
-
   return (
-    <ElementEditor model={model} manager={manager} actions={actions} onUpdate={onUpdate}>
-      <div style={{display: 'flex', justifyContent: 'space-between'}}>
-        <div className='list-editor'>
-          {model.items.map(renderItemEditor)}
-        </div>
-        <FontOptionsEditor model={model} manager={manager} onUpdate={onUpdate} />
+    <div style={{display: 'flex', justifyContent: 'space-between'}}>
+      <div className='list-editor'>
+        {element.items.map(renderItemEditor)}
       </div>
-    </ElementEditor>
+      <FontOptionsEditor element={element} manager={manager} onUpdate={onUpdate} />
+    </div>
   )
 }

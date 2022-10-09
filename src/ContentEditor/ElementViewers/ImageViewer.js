@@ -1,10 +1,7 @@
 import React from 'react';
-import ElementView from '../LiveEditor/ElementView';
 
-export default function ImageViewer({ model, manager }) {
+export default function ImageViewer({ element }) {
   return (
-    <ElementView model={model} manager={manager}>
-      <img alt={model.alt} src={model.url} />
-    </ElementView>
+    <img alt={element.alt} src={element.url} />
   )
 }

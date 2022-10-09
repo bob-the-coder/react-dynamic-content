@@ -1,13 +1,10 @@
 import React from 'react'
-import ElementView from '../LiveEditor/ElementView';
-import demo from '../DemoTree';
+import demo from '../Demo';
 
-export default function TextViewer({ model, manager }) {
-  let fontOptions = {...demo.fontOptions, ...model.fontOptions};
+export default function TextViewer({ element }) {
+  let fontOptions = {...demo.fontOptions, ...element.fontOptions};
 
   return (
-    <ElementView model={model} manager={manager}>
-      <div style={fontOptions}>{model.text}</div>
-    </ElementView>
+    <div style={fontOptions}>{element.text}</div>
   )
 }

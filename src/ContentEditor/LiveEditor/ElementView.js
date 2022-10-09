@@ -1,10 +1,10 @@
 import React from 'react';
 import { ElementType, ElementTypeName } from '../ContentModel';
 
-export default function ElementView({ model, manager, children }) {
-    let className = `element-view element-view--${ElementTypeName[model.type].toLowerCase()}`;
-    if (model.type !== ElementType.Container){
-        if (model.highlight) {
+export default function ElementView({ element, manager, children }) {
+    let className = `element-view element-view--${ElementTypeName[element.type].toLowerCase()}`;
+    if (element.type !== ElementType.Container){
+        if (element.highlight) {
             className += ' element-view--highlight';
         } else if (manager.isHighlighting()) {
             className += ' element-view--obstructed';
@@ -12,7 +12,7 @@ export default function ElementView({ model, manager, children }) {
     }
   
     return (
-      <div className={className}>
+      <div key={element.id} className={className}>
         {children}
       </div>
     )
