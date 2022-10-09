@@ -12,7 +12,7 @@ export default function ElementView({ element, manager, children }) {
     }
   
     return (
-      <div key={element.id} className={className}>
+      <div key={element.id || Math.random()} className={className}>
         {children}
       </div>
     )

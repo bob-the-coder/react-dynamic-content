@@ -6,6 +6,8 @@ import TextEditor from './ElementEditors/TextEditor';
 import ImageEditor from './ElementEditors/ImageEditor';
 import ListEditor from './ElementEditors/ListEditor';
 import ContainerEditor from './ElementEditors/ContainerEditor';
+import PaddingOptionsEditor from './ElementEditors/PaddingOptionsEditor';
+import MultiEditor from './ElementEditors/MultiEditor';
 
 import TextViewer from './ElementViewers/TextViewer';
 import ImageViewer from './ElementViewers/ImageViewer';
@@ -13,6 +15,7 @@ import ListViewer from './ElementViewers/ListViewer';
 import ContainerViewer from './ElementViewers/ContainerViewer';
 
 import ContentManager from "./ContentManager";
+import { Button } from 'rsuite';
 
 const defaultFontOptions = {
     fontSize: 14,
@@ -69,32 +72,47 @@ const demoModel = new Container({
     ]
 });
 
-const addElementAction = (manager, onUpdate, element, elementType) => {
-    return { 
-        textLabel: `Add ${ElementTypeName[elementType]}`, 
-        handler: function() {
+const addElementAction = (manager, onUpdate, element, elementType) => (
+    <Button appearance="ghost"
+        onClick={function() {
             manager.addElement(element, elementType);
             onUpdate();
-        }
-    }
-};
-const removeElementAction = (manager, onUpdate, element) => { 
-    return { 
-        textLabel: `Remove ${ElementTypeName[element.type]}`, 
-        handler: function() {
+        }}
+    >
+        {`Add ${ElementTypeName[elementType]}`}
+    </Button>
+);
+
+const removeElementAction = (manager, onUpdate, element) => (
+    <Button appearance="ghost"
+        onClick={function() {
             manager.removeElement(element);
             onUpdate();
-        }
-    };
-};
+        }}
+    >
+        {`Remove ${ElementTypeName[element.type]}`}
+    </Button>
+);
 
 const demoManager = new ContentManager({ model: demoModel });
 
 demoManager.configure(ElementType.Text, {
     elementFactory: () => new TextElement({}),
     editorsProvider: (element, onUpdate) => [
-        <TextEditor manager={demoManager} element={element} onUpdate={onUpdate} />,
-        <FontOptionsEditor manager={demoManager} element={element} onUpdate={onUpdate} />
+        <MultiEditor manager={demoManager} element={element} onUpdate={onUpdate} editors={[
+            {
+                name: 'Text Settings',
+                editor: (element, manager, onUpdate) => <TextEditor manager={manager} element={element} onUpdate={onUpdate} />
+            },
+            {
+                name: 'Font Settings',
+                editor: (element, manager, onUpdate) => <FontOptionsEditor manager={manager} element={element} onUpdate={onUpdate} />
+            },
+            {
+                name: 'Padding Settings',
+                editor: (element, manager, onUpdate) => <PaddingOptionsEditor manager={manager} element={element} onUpdate={onUpdate} />
+            }
+        ]}/>
     ],
     viewerProvider: (element) => <TextViewer manager={demoManager} element={element} />,
     actionsProvider: (element, onUpdate) => [
@@ -120,13 +138,12 @@ demoManager.configure(ElementType.List, {
         <FontOptionsEditor manager={demoManager} element={element} onUpdate={onUpdate} />
     ],
     viewerProvider: (element) => <ListViewer manager={demoManager} element={element} />,
-    actionsProvider: (element, onUpdate) => [{ 
-            textLabel: 'Add List Item', 
-            handler: _ => {
+    actionsProvider: (element, onUpdate) => [
+        <Button appearance="ghost"
+            onClick={_ => {
                 element.items.push('');
                 onUpdate();
-            }
-        },
+        }}>Add list item</Button>,
         removeElementAction(demoManager, onUpdate, element)
     ]
 });

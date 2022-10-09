@@ -1,41 +1,43 @@
 import React from 'react';
 import demo from '../Demo';
+import { Form, Panel, InputGroup, InputNumber, RadioGroup, Radio } from 'rsuite';
 
-const fontSizes = [ 10, 12, 14, 18, 24, 32 ];
-const fontWeights = [ 'normal', 'bold' ];
-const colors = [ 'white', 'black', 'red', 'blue', 'green' ];
+const fontWeights = [ 'Normal', 'Bold' ];
+const colors = [ 'White', 'Black', 'Red', 'Blue', 'Green' ];
 
 export default function FontOptionsEditor({ element, manager, onUpdate }) {
-    let elementOptions = {...demo.fontOptions, ...element.fontOptions};
+    let fontOptions = {...demo.fontOptions, ...element.fontOptions};
 
-    function updateFontOptions(fontOptions) {
-        manager.updateElement({...element, fontOptions: {...elementOptions, ...fontOptions}});
+    function updateFontOptions(newFontOptions) {
+        manager.updateElement({...element, fontOptions: {...fontOptions, ...newFontOptions}});
         onUpdate();
     }
 
     return (
-        <details>
-            <summary>Font Settings</summary>
-            <div>
-                <div className='text-editor'>
-                    <label>Size</label>
-                    <select value={elementOptions.fontSize} onChange={e => updateFontOptions({fontSize: +e.target.value})}>
-                        {fontSizes.map(size => <option key={size} value={size}>{size}px</option>)}
-                    </select>
-                </div>
-                <div className='text-editor'>
-                    <label>Weight</label>
-                    <select value={elementOptions.fontWeight} onChange={e => updateFontOptions({fontWeight: e.target.value})}>
-                        {fontWeights.map(weight => <option key={weight} value={weight}>{weight}</option>)}
-                    </select>
-                </div>
-                <div className='text-editor'>
-                    <label>Color</label>
-                    <select value={elementOptions.color} onChange={e => updateFontOptions({color: e.target.value})}>
-                        {colors.map(color => <option key={color} value={color}>{color}</option>)}
-                    </select>
-                </div>
-            </div>
-        </details>
+        <Panel>
+            <Form.Group>
+                <Form.ControlLabel>Size</Form.ControlLabel>
+                <InputGroup>
+                    <InputNumber value={fontOptions.fontSize} placeholder='14px' onChange={fontSize => updateFontOptions({ fontSize: +fontSize })} />
+                    <InputGroup.Addon>px</InputGroup.Addon>
+                </InputGroup>
+            </Form.Group>
+            <Form.Group>
+                <Form.ControlLabel>Weight</Form.ControlLabel>
+                <RadioGroup value={fontOptions.fontWeight} onChange={fontWeight => updateFontOptions({ fontWeight })} inline={true}>
+                    {fontWeights.map((weight, i) => (
+                        <Radio key={i} value={weight.toLowerCase()}>{weight}</Radio>
+                    ))}
+                </RadioGroup>
+            </Form.Group>
+            <Form.Group>
+                <Form.ControlLabel>Color</Form.ControlLabel>
+                <RadioGroup value={fontOptions.color} onChange={color => updateFontOptions({ color })} inline={true}>
+                    {colors.map((color, i) => (
+                        <Radio key={i} value={color.toLowerCase()}>{color}</Radio>
+                    ))}
+                </RadioGroup>
+            </Form.Group>
+        </Panel>
     )
 }

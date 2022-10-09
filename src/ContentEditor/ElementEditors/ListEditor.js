@@ -1,51 +1,56 @@
-import React from 'react';
-import TextInput from '../TextInput';
-import FontOptionsEditor from './FontOptionsEditor';
+import React, { useState } from 'react';
+import { Form, Input, InputGroup, Panel, RadioGroup, Radio } from 'rsuite';
+import InputGroupButton from 'rsuite/esm/InputGroup/InputGroupButton';
 
 export default function ListEditor({ element, manager, onUpdate }) {
-  function updateElement(items) {
-    manager.updateElement({...element, items});
+  const [ orderType, setOrderType ] = useState('Ordered');
+
+  function updateElement(newElement) {
+    manager.updateElement({...element, ...newElement});
     onUpdate();
-  }
-
-  function addItem() {
-    let items = element.items;
-    items.push('');
-
-    updateElement(items);
   }
 
   function removeItem(index) {
     let items = element.items;
     items.splice(index, 1);
 
-    updateElement(items);
+    updateElement({ items });
   }
 
   function updateItem(index, value) {
     let items = element.items;
     items[index] = value;
 
-    updateElement(items);
+    updateElement({ items });
   }
 
   function renderItemEditor(item, index) {
     return (
-      <div key={index}>
-        <label>Item {index + 1}</label>
+      <Form.Group key={index}>
+        <Form.ControlLabel>Item {index + 1}</Form.ControlLabel>
         <br />
-        <TextInput value={item} onChange={value => updateItem(index, value)} />
-        <span onClick={_ => removeItem(index)}><strong>Remove Item</strong></span>
-      </div>
+        <InputGroup>
+          <Input value={item} onChange={value => updateItem(index, value)} />
+          <InputGroupButton onClick={_ => removeItem(index)}>&times;</InputGroupButton>
+        </InputGroup>
+      </Form.Group>
     )
   }
 
+  function updateOrderType(orderType) {
+    setOrderType(orderType);
+    updateElement({ ordered: orderType === 'Ordered' })
+  }
+
   return (
-    <div style={{display: 'flex', justifyContent: 'space-between'}}>
-      <div className='list-editor'>
-        {element.items.map(renderItemEditor)}
-      </div>
-      <FontOptionsEditor element={element} manager={manager} onUpdate={onUpdate} />
-    </div>
+    <Panel header="List Settings">
+      <Form.Group>
+          <RadioGroup inline={true} onChange={updateOrderType} value={orderType}>
+            <Radio value='Ordered'>Ordered</Radio>
+            <Radio value='Unordered'>Unordered</Radio>
+          </RadioGroup>
+        </Form.Group>
+      {element.items.map(renderItemEditor)}
+    </Panel>
   )
 }

@@ -1,6 +1,5 @@
 import React from 'react';
 import { ElementTypeName } from '../ContentModel';
-import EditorButton from '../EditorButton';
 
 export default function ElementEditor({ element, manager, onUpdate, children }) {
     function highlight() {
@@ -13,16 +12,11 @@ export default function ElementEditor({ element, manager, onUpdate, children }) 
         onUpdate();
     }
 
-    function renderAction(action, index) {
-        let {textLabel, handler} = action;
-        return <EditorButton key={index} value={textLabel} variant='default' onClick={handler} />
-    }
-    
     const elementType = ElementTypeName[element.type];
     let actions = manager.getActions(element, onUpdate);
 
     return (
-        <div key={element.id} className={`element-editor element-editor--${elementType.toLowerCase()}`}
+        <div key={element.id || Math.random()} className={`element-editor element-editor--${elementType.toLowerCase()}`}
             onMouseLeave={removeHighlight}
             onMouseEnter={highlight}
         >
@@ -34,7 +28,7 @@ export default function ElementEditor({ element, manager, onUpdate, children }) 
             </div>
 
             <div className="element-editor--actions">
-                {actions.map(renderAction)}
+                {actions}
             </div>
         </div>
     )

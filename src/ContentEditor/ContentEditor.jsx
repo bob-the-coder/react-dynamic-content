@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import ContainerEditor from './ElementEditors/ContainerEditor';
-import ContainerViewer from './ElementViewers/ContainerViewer';
 
 import './ContentEditor.css';
 import SimpleBar from 'simplebar-react';
