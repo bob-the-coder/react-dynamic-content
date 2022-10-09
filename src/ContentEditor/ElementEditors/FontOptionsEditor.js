@@ -14,7 +14,7 @@ export default function FontOptionsEditor({ element, manager, onUpdate }) {
     }
 
     return (
-        <Panel>
+        <div>
             <Form.Group>
                 <Form.ControlLabel>Size</Form.ControlLabel>
                 <InputGroup>
@@ -38,6 +38,6 @@ export default function FontOptionsEditor({ element, manager, onUpdate }) {
                     ))}
                 </RadioGroup>
             </Form.Group>
-        </Panel>
+        </div>
     )
 }
