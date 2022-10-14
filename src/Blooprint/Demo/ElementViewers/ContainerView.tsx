@@ -1,6 +1,6 @@
 import React from 'react';
-import {ElementViewProps} from "../BlueprintConfiguration";
-import Container from "../Demo/Elements/Container";
+import {ElementViewProps} from "../../Base/BlooprintConfiguration";
+import Container from "../Elements/Container";
 
 export default function ContainerView(props: ElementViewProps<Container>) {
   return (

@@ -1,8 +1,8 @@
 import React from 'react';
 import { Form, InputGroup, InputNumber, RadioGroup, Radio } from 'rsuite';
-import {FontSettings} from "../Demo/Elements/Mixins";
-import UiElement from "../Base/UiElement";
-import {SettingsEditorProps} from "../BlueprintConfiguration";
+import {SettingsEditorProps} from "../../Base/BlooprintConfiguration";
+import UiElement from "../../Base/UiElement";
+import {FontSettings} from "../Elements/Mixins";
 
 const fontWeights = [ 'Normal', 'Bold' ];
 const colors = [ 'White', 'Black', 'Red', 'Blue', 'Green' ];
@@ -12,21 +12,21 @@ export default function FontSettingsEditor<TProps extends SettingsEditorProps<Ui
 
     function updateSize(size: number) {
         props.element.font.fontSize = size;
-        props.blueprint.updateElement(props.element);
+        props.blooprint.updateElement(props.element);
     }
 
     function updateWeight(weight: string) {
         props.element.font.fontWeight = weight;
-        props.blueprint.updateElement(props.element);
+        props.blooprint.updateElement(props.element);
     }
 
     function updateColor(color: string) {
         props.element.font.color = color;
-        props.blueprint.updateElement(props.element);
+        props.blooprint.updateElement(props.element);
     }
 
     return (
-        <>
+        <Form.Group>
             <Form.Group>
                 <Form.ControlLabel>Size</Form.ControlLabel>
                 <InputGroup>
@@ -50,6 +50,6 @@ export default function FontSettingsEditor<TProps extends SettingsEditorProps<Ui
                     ))}
                 </RadioGroup>
             </Form.Group>
-        </>
+        </Form.Group>
     )
 }

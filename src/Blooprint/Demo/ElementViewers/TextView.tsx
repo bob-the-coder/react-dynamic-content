@@ -1,7 +1,7 @@
 import React from 'react'
-import Text from '../Demo/Elements/Text';
-import {ElementViewProps} from "../BlueprintConfiguration";
-import {FontSettings, PaddingSettings} from "../Demo/Elements/Mixins";
+import {ElementViewProps} from "../../Base/BlooprintConfiguration";
+import Text from "../Elements/Text";
+import {FontSettings, PaddingSettings} from "../Elements/Mixins";
 
 
 export default function TextView(props: ElementViewProps<Text>) {

@@ -1,7 +1,7 @@
 import React from 'react';
-import {ElementViewProps} from "../BlueprintConfiguration";
-import List from "../Demo/Elements/List";
-import {FontSettings} from "../Demo/Elements/Mixins";
+import {ElementViewProps} from "../../Base/BlooprintConfiguration";
+import List from "../Elements/List";
+import {FontSettings} from "../Elements/Mixins";
 
 export default function ListView(props: ElementViewProps<List>) {
   let fontOptions = props.element.font || new FontSettings().font;

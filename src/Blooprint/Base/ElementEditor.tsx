@@ -1,32 +1,33 @@
 import React, {useState} from 'react';
-import UiElement from "../Base/UiElement";
-import BlueprintConfiguration, {BlueprintApi} from "../BlueprintConfiguration";
+import BlooprintConfiguration, {BlooprintApi} from "./BlooprintConfiguration";
+import UiElement from "./UiElement";
+import {UiSettings} from "./UiSettings";
 import {Nav, Panel} from "rsuite";
-import {UiSettings} from "../Base/UiSettings";
 
 type ElementEditorProps<T> = {
     element: T;
-    blueprint: BlueprintApi;
-    config: BlueprintConfiguration;
+    blooprint: BlooprintApi;
+    config: BlooprintConfiguration;
 }
 
 export default function ElementEditor<T extends UiElement & UiSettings>(props: ElementEditorProps<T>) {
     const allSettings = props.config.getSettings(props.element);
-    const [tab, setTab] = useState(allSettings[0].type)
+    const [tab, setTab] = useState(allSettings[0].type);
+    const { blooprint, element } = props;
 
     function highlight() {
-        props.blueprint.highlight(props.element);
+        blooprint.highlight(element);
     }
 
     function removeHighlight() {
-        props.blueprint.highlight();
+        blooprint.highlight();
     }
 
     function renderSettingsTabs() {
         return (
-            <Nav activeKey={tab} onSelect={setTab} appearance="subtle">
+            <Nav key={0} activeKey={tab} onSelect={setTab} appearance="subtle" className="element-editor--nav">
                 {allSettings.map(settings => (
-                    <Nav.Item key={settings.type} eventKey={settings.type}>{settings.type}</Nav.Item>
+                    <Nav.Item key={settings.type} eventKey={settings.type}>{settings.type} Settings</Nav.Item>
                 ))}
             </Nav>
         )
@@ -40,7 +41,7 @@ export default function ElementEditor<T extends UiElement & UiSettings>(props: E
     }
 
     function renderChildEditor(element: UiElement) {
-        return <ElementEditor element={element} blueprint={props.blueprint} config={props.config}/>
+        return <ElementEditor key={element.id} element={element} blooprint={props.blooprint} config={props.config}/>
     }
 
     function renderChildren() {
@@ -62,7 +63,7 @@ export default function ElementEditor<T extends UiElement & UiSettings>(props: E
             <div className="element-editor--indicator"></div>
             <div className="element-editor--name">{props.element.type}</div>
             <div className="element-editor--settings">
-                <Panel header={`${props.element.type} Settings`}>
+                <Panel>
                     {[renderSettingsTabs(), renderCurrentSettingsEditor()]}
                 </Panel>
             </div>

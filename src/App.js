@@ -4,7 +4,7 @@ import './App.css';
 import 'rsuite/dist/rsuite.min.css'
 import { CustomProvider, Panel } from 'rsuite';
 
-import ContentEditor from './ContentEditorTs/ContentEditor';
+import ContentEditor from './Blooprint/ContentEditor';
 
 
 function App() {

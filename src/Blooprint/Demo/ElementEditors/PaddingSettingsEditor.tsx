@@ -1,9 +1,9 @@
 import React from 'react'
 import { Form, InputNumber, InputGroup, FlexboxGrid } from 'rsuite'
 import InputGroupAddon from 'rsuite/esm/InputGroup/InputGroupAddon'
-import UiElement from "../Base/UiElement";
-import {PaddingSettings} from "../Demo/Elements/Mixins";
-import {SettingsEditorProps} from "../BlueprintConfiguration";
+import {SettingsEditorProps} from "../../Base/BlooprintConfiguration";
+import UiElement from "../../Base/UiElement";
+import {PaddingSettings} from "../Elements/Mixins";
 
 
 const step = 5;
@@ -21,7 +21,7 @@ export default function PaddingSettingsEditor<TProps extends SettingsEditorProps
             case 'top': element.padding.top = value; break;
             case 'bottom': element.padding.bottom = value; break;
         }
-        props.blueprint.updateElement(element);
+        props.blooprint.updateElement(element);
     }
 
     return (

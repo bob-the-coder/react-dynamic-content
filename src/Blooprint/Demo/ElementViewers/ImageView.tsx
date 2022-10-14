@@ -1,6 +1,6 @@
 import React from 'react';
-import {ElementViewProps} from "../BlueprintConfiguration";
-import Image from "../Demo/Elements/Image";
+import {ElementViewProps} from "../../Base/BlooprintConfiguration";
+import Image from "../Elements/Image";
 
 export default function ImageView(props: ElementViewProps<Image>) {
   return (

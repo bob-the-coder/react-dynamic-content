@@ -7,11 +7,9 @@
 }
 
 export enum UiSettingsType {
-    None = 'None',
     Container = 'Container',
     Font = 'Font',
     Padding = 'Padding',
-    Margin = 'Margin',
     Image = 'Image',
     List = 'List',
     Text = 'Text'

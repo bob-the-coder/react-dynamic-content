@@ -1,9 +1,8 @@
-﻿import UiElement from "./Base/UiElement";
-import {UiSettingsType} from "./Demo/Elements/UiElementType";
+﻿import UiElement from "./UiElement";
+import {UiSettings} from "./UiSettings";
 import {ReactNode} from "react";
-import {UiSettings} from "./Base/UiSettings";
 
-export type BlueprintApi = {
+export type BlooprintApi = {
     addElement: (element: UiElement, parentId: string) => any;
     removeElement: (element: UiElement) => any;
     updateElement: (element: UiElement) => any;
@@ -13,15 +12,15 @@ export type BlueprintApi = {
 
 export type SettingsEditorProps<T extends UiSettings> = {
     element: T;
-    blueprint: BlueprintApi;
-    config: BlueprintConfiguration;
+    blooprint: BlooprintApi;
+    config: BlooprintConfiguration;
 }
 export type SettingsEditorProvider<T extends UiSettings> = (props: SettingsEditorProps<UiElement & T>) => ReactNode;
 
 export type ElementViewProps<T extends UiElement> = {
     element: T,
-    blueprint: BlueprintApi,
-    config: BlueprintConfiguration,
+    blooprint: BlooprintApi,
+    config: BlooprintConfiguration,
 }
 export type ElementViewProvider<T extends UiElement> = (props: ElementViewProps<T>) => ReactNode;
 
@@ -33,11 +32,11 @@ export type SettingsConfiguration<T extends UiSettings> = {
 export type ElementConfiguration<T extends UiElement> = {
     type: string;
     defaultValue: T;
-    settings: UiSettingsType[];
+    settings: string[];
     view: ElementViewProvider<T>
 }
 
-class BlueprintConfiguration {
+class BlooprintConfiguration {
     private settingsConfig: { [key: string]: SettingsConfiguration<any> } = {};
     private elementConfig: { [key: string]: ElementConfiguration<any> } = {};
 
@@ -70,4 +69,4 @@ class BlueprintConfiguration {
     }
 }
 
-export default BlueprintConfiguration;
+export default BlooprintConfiguration;

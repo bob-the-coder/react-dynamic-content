@@ -1,5 +1,4 @@
-﻿import BlueprintConfiguration from "../../BlueprintConfiguration";
-import {UiElementType, UiSettingsType} from "../Elements/UiElementType";
+﻿import {UiElementType, UiSettingsType} from "../Elements/UiElementType";
 import {
     ContainerSettings,
     FontSettings,
@@ -12,10 +11,11 @@ import Container from '../Elements/Container';
 import Text from '../Elements/Text';
 import Image from '../Elements/Image';
 import List from '../Elements/List';
-import SettingsEditors from '../../ElementEditors/SettingsEditors';
-import Views from '../../ElementViewers/Views';
+import BlooprintConfiguration from "../../Base/BlooprintConfiguration";
+import SettingsEditors from "../ElementEditors/SettingsEditors";
+import Views from "../ElementViewers/Views";
 
-const config = new BlueprintConfiguration();
+const config = new BlooprintConfiguration();
 config.configureSettings<FontSettings>({
     type: UiSettingsType.Font,
     editor: SettingsEditors.Font

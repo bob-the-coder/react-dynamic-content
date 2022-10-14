@@ -1,22 +1,22 @@
 import React from 'react';
 import {Form, Input} from 'rsuite';
-import {ImageSettings} from "../Demo/Elements/Mixins";
-import UiElement from "../Base/UiElement";
-import {SettingsEditorProps} from "../BlueprintConfiguration";
+import {SettingsEditorProps} from "../../Base/BlooprintConfiguration";
+import UiElement from "../../Base/UiElement";
+import {ImageSettings} from "../Elements/Mixins";
 
 export default function ImageSettingsEditor<TProps extends SettingsEditorProps<UiElement & ImageSettings>>(props: TProps) {
     function updateUrl(url: string) {
         props.element.url = url;
-        props.blueprint.updateElement(props.element);
+        props.blooprint.updateElement(props.element);
     }
 
     function updateAlt(alt: string) {
         props.element.alt = alt;
-        props.blueprint.updateElement(props.element);
+        props.blooprint.updateElement(props.element);
     }
 
     return (
-        <>
+        <Form.Group>
             <Form.Group>
                 <Form.ControlLabel>Url</Form.ControlLabel>
                 <Input value={props.element.url} onChange={updateUrl}/>
@@ -25,6 +25,6 @@ export default function ImageSettingsEditor<TProps extends SettingsEditorProps<U
                 <Form.ControlLabel>Placeholder</Form.ControlLabel>
                 <Input value={props.element.alt} onChange={updateAlt}/>
             </Form.Group>
-        </>
+        </Form.Group>
     )
 }

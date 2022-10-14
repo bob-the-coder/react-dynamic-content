@@ -1,15 +1,15 @@
 import React, {useState} from 'react';
 import {Form, Input, InputGroup, RadioGroup, Radio} from 'rsuite';
 import InputGroupButton from 'rsuite/esm/InputGroup/InputGroupButton';
-import {ListSettings} from "../Demo/Elements/Mixins";
-import UiElement from "../Base/UiElement";
-import {SettingsEditorProps} from "../BlueprintConfiguration";
+import {SettingsEditorProps} from "../../Base/BlooprintConfiguration";
+import {ListSettings} from "../Elements/Mixins";
+import UiElement from "../../Base/UiElement";
 
 export default function ListSettingsEditor<TProps extends SettingsEditorProps<UiElement & ListSettings>>(props: TProps) {
     const [orderType, setOrderType] = useState(props.element.ordered ? 'Ordered' : 'Unordered');
 
     function updateElement(newElement: any) {
-        props.blueprint.updateElement({...props.element, ...newElement});
+        props.blooprint.updateElement({...props.element, ...newElement});
     }
 
     function addItem() {
@@ -51,14 +51,16 @@ export default function ListSettingsEditor<TProps extends SettingsEditorProps<Ui
     }
 
     return (
-        <>
+        <Form.Group>
             <Form.Group>
                 <RadioGroup inline={true} onChange={(_) => updateOrderType(_.toString())} value={orderType}>
                     <Radio value='Ordered'>Ordered</Radio>
                     <Radio value='Unordered'>Unordered</Radio>
                 </RadioGroup>
             </Form.Group>
-            {props.element.items.map(renderItemEditor)}
-        </>
+            <Form.Group>
+                {props.element.items.map(renderItemEditor)}
+            </Form.Group>
+        </Form.Group>
     )
 }

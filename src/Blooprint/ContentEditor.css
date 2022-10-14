@@ -26,6 +26,16 @@
     overflow: auto;
 }
 
+.workspace-viewer--canvas {
+    padding: 30px;
+    box-shadow: inset 0 0 16px 16px #00000055;
+}
+
+.workspace-viewer--canvas > .element-view {
+    background: #282c34;
+    border: 1px solid #FFFFFF16;
+}
+
 .workspace .simplebar-scrollbar:before {
     background: white;
 }
@@ -105,6 +115,10 @@
     position: absolute;
     top: 0;
     left: 0;
+}
+
+.element-editor--nav {
+    margin-bottom: 20px;
 }
 
 .element-editor--settings {

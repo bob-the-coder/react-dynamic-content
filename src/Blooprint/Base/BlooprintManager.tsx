@@ -1,25 +1,25 @@
 import React, {useState} from 'react';
-import UiElement from "./Base/UiElement";
-import BlueprintConfiguration from "./BlueprintConfiguration";
-import ElementEditor from './LiveEditor/ElementEditor';
-import ElementView from "./LiveEditor/ElementView";
 import SimpleBar from "simplebar-react";
+import BlooprintConfiguration from "./BlooprintConfiguration";
+import UiElement from "./UiElement";
+import ElementEditor from "./ElementEditor";
+import ElementView from "./ElementView";
 
-export type BlueprintManagerProps = {
-    config: BlueprintConfiguration;
+export type BlooprintManagerProps = {
+    config: BlooprintConfiguration;
     defaultRoot: UiElement;
-    blueprint?: UiElement;
-    onUpdate?: (blueprint: UiElement) => any
+    blooprint?: UiElement;
+    onUpdate?: (Blooprint: UiElement) => any
 }
 
-export default function BlueprintManager(props: BlueprintManagerProps) {
+export default function BlooprintManager(props: BlooprintManagerProps) {
     const config = props.config;
     let elements = new Array<UiElement>(0);
 
-    const [blueprint, setBlueprint] = useState(props.blueprint);
-    if (blueprint) {
-        elements = props.blueprint
-            ? parse(props.blueprint, '')
+    const [blooprint, setBlooprint] = useState(props.blooprint);
+    if (blooprint) {
+        elements = props.blooprint
+            ? parse(props.blooprint, '')
             : [props.defaultRoot]
     }
 
@@ -75,15 +75,15 @@ export default function BlueprintManager(props: BlueprintManagerProps) {
         //console.log(self._elements);
         // console.log(contentTree);
         let root = {...elements[0]};
-        let blueprint = buildElement(root);
+        let Blooprint = buildElement(root);
 
-        setBlueprint(blueprint);
+        setBlooprint(Blooprint);
         if (!props.onUpdate) return;
 
-        props.onUpdate(blueprint);
+        props.onUpdate(Blooprint);
     }
 
-    const blueprintApi = {
+    const blooprintApi = {
         addElement: function (parent: UiElement, type: string) {
             if (!parent) throw new Error(`Container element is missing.`);
             let elementConfig = config.getConfiguration(type);
@@ -98,7 +98,7 @@ export default function BlueprintManager(props: BlueprintManagerProps) {
 
             let children = findChildren(element.id);
             for (let i = 0; i < children.length; i++) {
-                blueprintApi.removeElement(children[i]);
+                blooprintApi.removeElement(children[i]);
             }
 
             if (!elements.length) elements.push({...props.defaultRoot});
@@ -122,31 +122,21 @@ export default function BlueprintManager(props: BlueprintManagerProps) {
         }
     }
 
-    function renderEditor() {
-        if (!blueprint) throw new Error("Element tree is null.");
-
-        return (
-            <ElementEditor element={blueprint} blueprint={blueprintApi} config={config}/>
-        )
+    if (!blooprint) {
+        return <h1>Blooprint is loading</h1>
     }
-
-    function renderView() {
-        if (!blueprint) throw new Error("Element tree is null.");
-
-        return (
-            <ElementView element={blueprint} blueprint={blueprintApi} config={config}/>
-        )
-    }
-
+    
     return (
         <div className='content-editor'>
             <h1>Content editor proof of concept</h1>
             <div className='workspace'>
                 <SimpleBar style={{maxHeight: '80vh'}} className='workspace-editor'>
-                    {renderEditor()}
+                    <ElementEditor element={blooprint} blooprint={blooprintApi} config={config}/>
                 </SimpleBar>
                 <SimpleBar className='workspace-viewer'>
-                    {renderView()}
+                    <div className='workspace-viewer--canvas'>
+                        <ElementView element={blooprint} blooprint={blooprintApi} config={config}/>
+                    </div>
                 </SimpleBar>
             </div>
         </div>
