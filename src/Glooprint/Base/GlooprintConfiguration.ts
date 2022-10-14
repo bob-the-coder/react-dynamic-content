@@ -2,7 +2,7 @@
 import {UiSettings} from "./UiSettings";
 import {ReactNode} from "react";
 
-export type BlooprintApi = {
+export type GlooprintApi = {
     addElement: (element: UiElement, parentId: string) => any;
     removeElement: (element: UiElement) => any;
     updateElement: (element: UiElement) => any;
@@ -12,15 +12,15 @@ export type BlooprintApi = {
 
 export type SettingsEditorProps<T extends UiSettings> = {
     element: T;
-    blooprint: BlooprintApi;
-    config: BlooprintConfiguration;
+    glooprint: GlooprintApi;
+    config: GlooprintConfiguration;
 }
 export type SettingsEditorProvider<T extends UiSettings> = (props: SettingsEditorProps<UiElement & T>) => ReactNode;
 
 export type ElementViewProps<T extends UiElement> = {
     element: T,
-    blooprint: BlooprintApi,
-    config: BlooprintConfiguration,
+    glooprint: GlooprintApi,
+    config: GlooprintConfiguration,
 }
 export type ElementViewProvider<T extends UiElement> = (props: ElementViewProps<T>) => ReactNode;
 
@@ -36,7 +36,7 @@ export type ElementConfiguration<T extends UiElement> = {
     view: ElementViewProvider<T>
 }
 
-class BlooprintConfiguration {
+class GlooprintConfiguration {
     private settingsConfig: { [key: string]: SettingsConfiguration<any> } = {};
     private elementConfig: { [key: string]: ElementConfiguration<any> } = {};
 
@@ -69,4 +69,4 @@ class BlooprintConfiguration {
     }
 }
 
-export default BlooprintConfiguration;
+export default GlooprintConfiguration;

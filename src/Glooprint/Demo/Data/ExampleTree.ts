@@ -6,13 +6,13 @@ import List from "../Elements/List";
 const h1 = {
     fontSize: 24,
     fontWeight: 'bold',
-    color: 'red'
+    color: 'black'
 };
 
 const div = {
     fontSize: 14,
     fontWeight: 'normal',
-    color: 'white'
+    color: 'black'
 };
 
 const root = new Container();

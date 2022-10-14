@@ -1,7 +1,7 @@
 import React from 'react'
 import { Form, InputNumber, InputGroup, FlexboxGrid } from 'rsuite'
 import InputGroupAddon from 'rsuite/esm/InputGroup/InputGroupAddon'
-import {SettingsEditorProps} from "../../Base/BlooprintConfiguration";
+import {SettingsEditorProps} from "../../Base/GlooprintConfiguration";
 import UiElement from "../../Base/UiElement";
 import {PaddingSettings} from "../Elements/Mixins";
 
@@ -21,16 +21,16 @@ export default function PaddingSettingsEditor<TProps extends SettingsEditorProps
             case 'top': element.padding.top = value; break;
             case 'bottom': element.padding.bottom = value; break;
         }
-        props.blooprint.updateElement(element);
+        props.glooprint.updateElement(element);
     }
 
     return (
-        <FlexboxGrid justify='space-between'>
+        <FlexboxGrid justify='space-between' key={Math.random()}>
             <FlexboxGrid.Item colspan={11}>
                 <Form.Group>
                     <Form.ControlLabel>Top</Form.ControlLabel>
                     <Form.Group>
-                        <InputGroup {...{inline: true}}>
+                        <InputGroup {...{inline: 'true'}}>
                             <InputNumber value={padding.top} step={step} onChange={value => updatePadding('top', +value)} />
                             <InputGroupAddon>px</InputGroupAddon>
                         </InputGroup>

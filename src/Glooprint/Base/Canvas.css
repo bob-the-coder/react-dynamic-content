@@ -1,0 +1,41 @@
+﻿.element-view--canvas-wrapper {
+    height: calc(100% - 120px);
+    width: 100%;
+    position: relative;
+    --canvas-border: 30px;
+}
+
+.workspace-viewer--canvas,
+.element-view--canvas-overlay {
+    transition: all .5s ease-in-out;
+}
+
+.workspace-viewer--canvas {
+    max-width: 100%;
+    margin: 0 auto;
+    position: relative;
+}
+
+.element-view--canvas-overlay {
+    position: absolute;
+    top: var(--canvas-border);
+    left: 50%;
+    transform: translateX(-50%);
+    height: calc(100% - 2 * var(--canvas-border));
+    width: calc(attr(data-width) - 2 * var(--canvas-border));
+    border-radius:8px;
+    --screenlight: #FFFFFF25;
+    box-shadow:
+            0 -4px 4px 2px var(--screenlight),
+            0 4px 4px 2px var(--screenlight),
+            -4px 0 4px 2px var(--screenlight),
+            4px 0 4px 2px var(--screenlight),
+            0 0 2px 26px #131313,
+            0 0 0 30px #242424
+            ;
+}
+
+.workspace-viewer--canvas > .element-view {
+    background: white;
+    border: 1px solid #FFFFFF16;
+}

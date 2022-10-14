@@ -6,9 +6,9 @@ export class FontSettings extends UiSettings {
         fontWeight: string;
         color: string;
     } = {
-        fontSize: 14,
+        fontSize: 16,
         fontWeight: 'normal',
-        color: 'white'
+        color: 'black'
     }
 }
 

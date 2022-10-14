@@ -1,5 +1,5 @@
 import React from 'react'
-import {ElementViewProps} from "../../Base/BlooprintConfiguration";
+import {ElementViewProps} from "../../Base/GlooprintConfiguration";
 import Text from "../Elements/Text";
 import {FontSettings, PaddingSettings} from "../Elements/Mixins";
 

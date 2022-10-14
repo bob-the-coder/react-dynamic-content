@@ -11,11 +11,11 @@ import Container from '../Elements/Container';
 import Text from '../Elements/Text';
 import Image from '../Elements/Image';
 import List from '../Elements/List';
-import BlooprintConfiguration from "../../Base/BlooprintConfiguration";
+import GlooprintConfiguration from "../../Base/GlooprintConfiguration";
 import SettingsEditors from "../ElementEditors/SettingsEditors";
 import Views from "../ElementViewers/Views";
 
-const config = new BlooprintConfiguration();
+const config = new GlooprintConfiguration();
 config.configureSettings<FontSettings>({
     type: UiSettingsType.Font,
     editor: SettingsEditors.Font
@@ -44,7 +44,7 @@ config.configureSettings<TextSettings>({
 config.configureElement<Container>({
     type: UiElementType.Container,
     defaultValue: new Container(),
-    settings: [ UiSettingsType.Container ],
+    settings: [ UiSettingsType.Container, UiSettingsType.Padding ],
     view: Views.Container
 });
 config.configureElement<Image>({

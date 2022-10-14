@@ -1,5 +1,5 @@
 import React from 'react';
-import {ElementViewProps} from "../../Base/BlooprintConfiguration";
+import {ElementViewProps} from "../../Base/GlooprintConfiguration";
 import List from "../Elements/List";
 import {FontSettings} from "../Elements/Mixins";
 
