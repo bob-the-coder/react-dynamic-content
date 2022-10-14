@@ -1,4 +1,6 @@
-export class FontSettings {
+import {UiSettings} from "../../Base/UiSettings";
+
+export class FontSettings extends UiSettings {
     font: {
         fontSize: number;
         fontWeight: string;
@@ -10,7 +12,7 @@ export class FontSettings {
     }
 }
 
-export class PaddingSettings {
+export class PaddingSettings extends UiSettings {
     padding: {
         top: number;
         bottom: number;
@@ -24,15 +26,20 @@ export class PaddingSettings {
     }
 }
 
-export class ImageSettings {
+export class ImageSettings extends UiSettings {
     url: string = '';
     alt: string = '';
 }
 
-export class ListSettings {
+export class ListSettings extends UiSettings {
     items: string[] = [];
+    ordered: boolean = false;
 }
 
-export class TextSettings {
+export class TextSettings extends UiSettings {
     text: string = '';
+}
+
+export class ContainerSettings extends UiSettings {
+    alignContent: string = 'left';
 }

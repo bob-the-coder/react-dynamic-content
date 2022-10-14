@@ -1,4 +1,4 @@
-import UiContainer from "../../Base/UiContainer";
+import Container from "../Elements/Container";
 import Text from "../Elements/Text";
 import Image from "../Elements/Image";
 import List from "../Elements/List";
@@ -15,7 +15,7 @@ const div = {
     color: 'white'
 };
 
-const root = new UiContainer();
+const root = new Container();
 
 const textOne = new Text();
 textOne.text = 'From nested trees to personalized frameworks';
@@ -27,7 +27,7 @@ textTwo.text = 'Building a nested tree is fun';
 textTwo.font = div;
 root.children.push(textTwo);
 
-const inner = new UiContainer();
+const inner = new Container();
 
 const textInner = new Text();
 textInner.text = 'Here is everything you need to get started:';

@@ -1,22 +1,27 @@
 import React from 'react'
 import { Form, InputNumber, InputGroup, FlexboxGrid } from 'rsuite'
 import InputGroupAddon from 'rsuite/esm/InputGroup/InputGroupAddon'
+import UiElement from "../Base/UiElement";
+import {PaddingSettings} from "../Demo/Elements/Mixins";
+import {SettingsEditorProps} from "../BlueprintConfiguration";
 
-const defaultPadding = {
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0
-}
 
 const step = 5;
 
-export default function PaddingOptionsEditor({ element, manager, onUpdate }) {
-    let padding = {...defaultPadding, ...element.padding }
+export default function PaddingSettingsEditor<TProps extends SettingsEditorProps<UiElement & PaddingSettings>>(props: TProps) {
+    let padding = props.element.padding || new PaddingSettings().padding;
 
-    function updatePadding(newPadding) {
-        manager.updateElement({...element, padding: {...padding, ...newPadding}});
-        onUpdate();
+    function updatePadding(side: string, value: number) {
+        let element = props.element;
+        if (!element.padding) element.padding = new PaddingSettings().padding;
+        
+        switch (side) {
+            case 'left': element.padding.left = value; break;
+            case 'right': element.padding.right = value; break;
+            case 'top': element.padding.top = value; break;
+            case 'bottom': element.padding.bottom = value; break;
+        }
+        props.blueprint.updateElement(element);
     }
 
     return (
@@ -25,8 +30,8 @@ export default function PaddingOptionsEditor({ element, manager, onUpdate }) {
                 <Form.Group>
                     <Form.ControlLabel>Top</Form.ControlLabel>
                     <Form.Group>
-                        <InputGroup inline={true}>
-                            <InputNumber value={padding.top} step={step} onChange={value => updatePadding({ top: +value})} />
+                        <InputGroup {...{inline: true}}>
+                            <InputNumber value={padding.top} step={step} onChange={value => updatePadding('top', +value)} />
                             <InputGroupAddon>px</InputGroupAddon>
                         </InputGroup>
                     </Form.Group>
@@ -34,7 +39,7 @@ export default function PaddingOptionsEditor({ element, manager, onUpdate }) {
                 <Form.Group>
                     <Form.ControlLabel>Bottom</Form.ControlLabel>
                     <InputGroup>
-                        <InputNumber value={padding.bottom} step={step} onChange={value => updatePadding({ bottom: +value})} />
+                        <InputNumber value={padding.bottom} step={step} onChange={value => updatePadding('bottom', +value)} />
                         <InputGroupAddon>px</InputGroupAddon>
                     </InputGroup>
                 </Form.Group>
@@ -43,14 +48,14 @@ export default function PaddingOptionsEditor({ element, manager, onUpdate }) {
                 <Form.Group>
                     <Form.ControlLabel>Left</Form.ControlLabel>
                     <InputGroup>
-                        <InputNumber value={padding.left} step={step} onChange={value => updatePadding({ left: +value})} />
+                        <InputNumber value={padding.left} step={step} onChange={value => updatePadding('left', +value)} />
                         <InputGroupAddon>px</InputGroupAddon>
                     </InputGroup>
                 </Form.Group>
                 <Form.Group>
                     <Form.ControlLabel>Right</Form.ControlLabel>
                     <InputGroup>
-                        <InputNumber value={padding.right} step={step} onChange={value => updatePadding({ right: +value})} />
+                        <InputNumber value={padding.right} step={step} onChange={value => updatePadding('right', +value)} />
                         <InputGroupAddon>px</InputGroupAddon>
                     </InputGroup>
                 </Form.Group>

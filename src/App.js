@@ -4,9 +4,8 @@ import './App.css';
 import 'rsuite/dist/rsuite.min.css'
 import { CustomProvider, Panel } from 'rsuite';
 
-import ContentEditor from './ContentEditor/ContentEditor';
+import ContentEditor from './ContentEditorTs/ContentEditor';
 
-import demo from './ContentEditor/Demo';
 
 function App() {
 
@@ -14,7 +13,7 @@ function App() {
   return (
     <Panel className="App">
       <CustomProvider theme="dark">
-        <ContentEditor model={demo.model} manager={demo.manager} />
+        <ContentEditor />
       </CustomProvider>
     </Panel> 
   );

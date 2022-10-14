@@ -1,15 +1,16 @@
-const uid = () => ('' + Math.abs(Math.random() + Math.random() + Math.random())).replace(/[^\d]/g, '');
+import {UiElementType} from "../Demo/Elements/UiElementType";
+
+const uid = () => ('' + Math.abs(Math.random() + Math.random() + Math.random())).replace(/\D/g, '');
 
 export default class UiElement {
     id: string = uid();
-    parentId: string;
-    type: number;
-    typeName: string;
-    isHighlighted: boolean;
+    parentId: string = '';
+    type: string = UiElementType.None;
+    isHighlighted: boolean = false;
+    children: UiElement[] = [];
 
-    constructor(type: number, typeName: string) {
+    constructor(type: UiElementType) {
         this.type = type;
-        this.typeName = typeName[0].toUpperCase() + typeName.substring(1);
     }
 }
 

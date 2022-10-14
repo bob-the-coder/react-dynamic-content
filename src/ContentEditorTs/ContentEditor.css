@@ -1,4 +1,4 @@
-.workspace {
+﻿.workspace {
     width: 100vw;
     display: flex;
     justify-content: space-between;
@@ -107,8 +107,12 @@
     left: 0;
 }
 
-.element-editor--body {
+.element-editor--settings {
     margin-top: 30px;
+}
+
+.element-editor--inner {
+    padding: 20px;
 }
 
 .element-editor--actions {
@@ -138,7 +142,7 @@
 
 .element-editor .rs-input-group:hover,
 .element-editor .rs-input-group:focus-within,
-.element-editor .rs-input:focus, 
+.element-editor .rs-input:focus,
 .element-editor .rs-input:hover:not(:disabled) {
     border-color: var(--element-color) !important;
     outline-color: var(--element-color) !important;
