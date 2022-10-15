@@ -9,7 +9,7 @@ export default class UiElement {
     isHighlighted: boolean = false;
     children: UiElement[] = [];
 
-    constructor(type: UiElementType) {
+    constructor(type: string) {
         this.type = type;
     }
 }

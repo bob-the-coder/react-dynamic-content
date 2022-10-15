@@ -1,10 +1,10 @@
 import React from 'react';
-import {ElementViewProps} from "../../Base/GlooprintConfiguration";
+import {ElementViewProps} from "../../Base/BlooprintConfiguration";
 import Container from "../Elements/Container";
 import {PaddingSettings} from "../Elements/Mixins";
 
 export default function ContainerView(props: ElementViewProps<Container>) {
-  const elementPadding = props.element.padding || new PaddingSettings();
+  const elementPadding = {...new PaddingSettings(), ...props.element.padding};
   const padding = {
     paddingTop: elementPadding.top,
     paddingBottom: elementPadding.bottom,
@@ -14,6 +14,7 @@ export default function ContainerView(props: ElementViewProps<Container>) {
   
   return (
     <div style={padding}>
+      {props.children}
     </div>
   )
 }

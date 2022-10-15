@@ -1,7 +1,7 @@
 import React from 'react'
 import { Form, InputNumber, InputGroup, FlexboxGrid } from 'rsuite'
 import InputGroupAddon from 'rsuite/esm/InputGroup/InputGroupAddon'
-import {SettingsEditorProps} from "../../Base/GlooprintConfiguration";
+import {SettingsEditorProps} from "../../Base/BlooprintConfiguration";
 import UiElement from "../../Base/UiElement";
 import {PaddingSettings} from "../Elements/Mixins";
 
@@ -9,7 +9,7 @@ import {PaddingSettings} from "../Elements/Mixins";
 const step = 5;
 
 export default function PaddingSettingsEditor<TProps extends SettingsEditorProps<UiElement & PaddingSettings>>(props: TProps) {
-    let padding = props.element.padding || new PaddingSettings().padding;
+    let padding = {...new PaddingSettings().padding, ...props.element.padding};
 
     function updatePadding(side: string, value: number) {
         let element = props.element;
@@ -21,7 +21,7 @@ export default function PaddingSettingsEditor<TProps extends SettingsEditorProps
             case 'top': element.padding.top = value; break;
             case 'bottom': element.padding.bottom = value; break;
         }
-        props.glooprint.updateElement(element);
+        props.blooprint.updateElement(element);
     }
 
     return (

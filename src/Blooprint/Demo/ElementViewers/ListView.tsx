@@ -1,10 +1,10 @@
 import React from 'react';
-import {ElementViewProps} from "../../Base/GlooprintConfiguration";
+import {ElementViewProps} from "../../Base/BlooprintConfiguration";
 import List from "../Elements/List";
 import {FontSettings} from "../Elements/Mixins";
 
 export default function ListView(props: ElementViewProps<List>) {
-  let fontOptions = props.element.font || new FontSettings().font;
+  let fontOptions = {...new FontSettings().font, ...props.element.font};
 
   return props.element.ordered 
     ? (

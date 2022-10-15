@@ -4,7 +4,7 @@ import './App.css';
 import 'rsuite/dist/rsuite.min.css'
 import { CustomProvider } from 'rsuite';
 
-import ContentEditor from './Glooprint/ContentEditor';
+import ContentEditor from './Blooprint/ContentEditor';
 
 function Error(ex) {
     return <div>{ex}</div>

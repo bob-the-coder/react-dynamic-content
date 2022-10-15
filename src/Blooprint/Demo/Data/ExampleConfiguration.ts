@@ -11,11 +11,11 @@ import Container from '../Elements/Container';
 import Text from '../Elements/Text';
 import Image from '../Elements/Image';
 import List from '../Elements/List';
-import GlooprintConfiguration from "../../Base/GlooprintConfiguration";
+import BlooprintConfiguration from "../../Base/BlooprintConfiguration";
 import SettingsEditors from "../ElementEditors/SettingsEditors";
 import Views from "../ElementViewers/Views";
 
-const config = new GlooprintConfiguration();
+const config = new BlooprintConfiguration();
 config.configureSettings<FontSettings>({
     type: UiSettingsType.Font,
     editor: SettingsEditors.Font

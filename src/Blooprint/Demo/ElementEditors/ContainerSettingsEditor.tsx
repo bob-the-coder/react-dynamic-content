@@ -1,6 +1,6 @@
 import React from 'react';
 import {Form, Radio, RadioGroup} from 'rsuite';
-import {SettingsEditorProps} from "../../Base/GlooprintConfiguration";
+import {SettingsEditorProps} from "../../Base/BlooprintConfiguration";
 import UiElement from "../../Base/UiElement";
 import {ContainerSettings} from "../Elements/Mixins";
 
@@ -16,11 +16,11 @@ const displayLabels = {
 }
 const alignOptions: (keyof labels)[] = ['left', 'center', 'right'];
 export default function ContainerSettingsEditor<TProps extends SettingsEditorProps<UiElement & ContainerSettings>>(props: TProps) {
-    let { element, glooprint } = props;
+    let { element, blooprint } = props;
     
     function updateSettings(alignContent: string) {
         element.alignContent = alignContent;
-        glooprint.updateElement(element);
+        blooprint.updateElement(element);
     }
     
     return (

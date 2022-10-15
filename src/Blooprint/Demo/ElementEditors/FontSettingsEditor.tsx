@@ -1,6 +1,6 @@
 import React from 'react';
 import { Form, InputGroup, InputNumber, RadioGroup, Radio } from 'rsuite';
-import {SettingsEditorProps} from "../../Base/GlooprintConfiguration";
+import {SettingsEditorProps} from "../../Base/BlooprintConfiguration";
 import UiElement from "../../Base/UiElement";
 import {FontSettings} from "../Elements/Mixins";
 
@@ -12,7 +12,7 @@ export default function FontSettingsEditor<TProps extends SettingsEditorProps<Ui
 
     function updateElement(newFontSettings: any) {
         let element =  {...props.element, font: {...fontSettings, ...newFontSettings}};
-        props.glooprint.updateElement(element);
+        props.blooprint.updateElement(element);
     }
     
     function updateSize(fontSize: number) {

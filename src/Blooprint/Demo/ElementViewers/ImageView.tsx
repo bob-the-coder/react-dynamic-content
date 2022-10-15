@@ -1,5 +1,5 @@
 import React from 'react';
-import {ElementViewProps} from "../../Base/GlooprintConfiguration";
+import {ElementViewProps} from "../../Base/BlooprintConfiguration";
 import Image from "../Elements/Image";
 
 export default function ImageView(props: ElementViewProps<Image>) {

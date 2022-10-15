@@ -1,29 +1,28 @@
 import React, {useState} from 'react';
-import GlooprintConfiguration, {GlooprintApi, SettingsConfiguration} from "./GlooprintConfiguration";
 import UiElement from "./UiElement";
 import {UiSettings} from "./UiSettings";
 import {Nav, Panel} from "rsuite";
 import {UiElementType} from "../Demo/Elements/UiElementType";
+import Blooprint from "./Blooprint";
 
 type ElementEditorProps<T> = {
     element: T;
-    glooprint: GlooprintApi;
-    config: GlooprintConfiguration;
+    blooprint: Blooprint;
 }
 
 export default function ElementEditor<T extends UiElement & UiSettings>(props: ElementEditorProps<T>) {
     if (!props) return <></>;
     
-    const allSettings = props.config.getSettings(props.element);
+    const allSettings = props.blooprint.getSettings(props.element);
     const [tab, setTab] = useState(allSettings[0].type);
-    const { glooprint, element, config } = props;
+    const { blooprint, element } = props;
 
     function highlight() {
-        glooprint.highlight(element);
+        blooprint.highlight(element);
     }
 
     function removeHighlight() {
-        glooprint.highlight();
+        blooprint.highlight();
     }
 
     function renderSettingsTabs() {
@@ -48,7 +47,7 @@ export default function ElementEditor<T extends UiElement & UiSettings>(props: E
 
     function renderChildEditor(element: UiElement) {
         try{
-            return <ElementEditor key={element.id} element={element} glooprint={glooprint} config={config}/>   
+            return <ElementEditor key={element.id} element={element} blooprint={blooprint} />   
         } catch (ex) {
             debugger;
         }

@@ -1,15 +1,15 @@
 import React, {useState} from 'react';
 import {Form, Input, InputGroup, RadioGroup, Radio} from 'rsuite';
 import InputGroupButton from 'rsuite/esm/InputGroup/InputGroupButton';
-import {SettingsEditorProps} from "../../Base/GlooprintConfiguration";
+import {SettingsEditorProps} from "../../Base/BlooprintConfiguration";
 import {ListSettings} from "../Elements/Mixins";
 import UiElement from "../../Base/UiElement";
 
 export default function ListSettingsEditor<TProps extends SettingsEditorProps<UiElement & ListSettings>>(props: TProps) {
-    const [orderType, setOrderType] = useState(props.element.ordered ? 'Ordered' : 'Unordered');
+    const orderType = props.element.ordered ? 'Ordered' : 'Unordered';
 
     function updateElement(newElement: any) {
-        props.glooprint.updateElement({...props.element, ...newElement});
+        props.blooprint.updateElement({...props.element, ...newElement});
     }
 
     function addItem() {
@@ -46,7 +46,6 @@ export default function ListSettingsEditor<TProps extends SettingsEditorProps<Ui
     }
 
     function updateOrderType(orderType: string) {
-        setOrderType(orderType);
         updateElement({ordered: orderType === 'Ordered'})
     }
 

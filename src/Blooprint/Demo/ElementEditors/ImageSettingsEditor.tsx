@@ -1,18 +1,18 @@
 import React from 'react';
 import {Form, Input} from 'rsuite';
-import {SettingsEditorProps} from "../../Base/GlooprintConfiguration";
+import {SettingsEditorProps} from "../../Base/BlooprintConfiguration";
 import UiElement from "../../Base/UiElement";
 import {ImageSettings} from "../Elements/Mixins";
 
 export default function ImageSettingsEditor<TProps extends SettingsEditorProps<UiElement & ImageSettings>>(props: TProps) {
     function updateUrl(url: string) {
         props.element.url = url;
-        props.glooprint.updateElement(props.element);
+        props.blooprint.updateElement(props.element);
     }
 
     function updateAlt(alt: string) {
         props.element.alt = alt;
-        props.glooprint.updateElement(props.element);
+        props.blooprint.updateElement(props.element);
     }
 
     return (

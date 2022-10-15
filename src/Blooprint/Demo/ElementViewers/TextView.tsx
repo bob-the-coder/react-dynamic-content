@@ -1,11 +1,11 @@
 import React from 'react'
-import {ElementViewProps} from "../../Base/GlooprintConfiguration";
+import {ElementViewProps} from "../../Base/BlooprintConfiguration";
 import Text from "../Elements/Text";
 import {FontSettings, PaddingSettings} from "../Elements/Mixins";
 
 
 export default function TextView(props: ElementViewProps<Text>) {
-  let padding = props.element.padding || new PaddingSettings().padding;
+  let padding = {...new PaddingSettings().padding, ...props.element.padding};
 
   let style = { 
     ...props.element.font || new FontSettings().font, 
