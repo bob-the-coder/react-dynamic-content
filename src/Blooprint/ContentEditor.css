@@ -1,29 +1,39 @@
+﻿.workspace-title {
+    height: 80px;
+}
+
 .workspace {
-    width: 100vw;
+    height: calc(100vh - 80px);
+    max-height: calc(100vh - 80px);
+    overflow: hidden;
+    width: 100%;
     display: flex;
     justify-content: space-between;
     gap: 20px;
 }
 
 .workspace:after {
-    clear: both;
-    display: table;
-    content: '';
 }
 
 .workspace-editor {
-    width: 40%;
+    width: 30%;
+    max-height: 100%;
 }
 
 .workspace-viewer {
-    width: 60%;
-    padding: 0 20px;
+    width: 70%;
+    max-height: 100%;
+    padding-right: 20px;
+    padding-bottom: 20px;
 }
 
 .workspace-editor,
 .workspace-viewer {
-    max-height: 80vh;
-    overflow: auto;
+    max-height: 100%;
+}
+
+.workspace-viewer--settings {
+    height: 120px;
 }
 
 .workspace .simplebar-scrollbar:before {
@@ -47,6 +57,10 @@
 }
 .element-view--obstructed {
     opacity: 0.2;
+}
+
+.element-view img {
+    max-width: 100%;
 }
 
 .element-editor,
@@ -107,8 +121,16 @@
     left: 0;
 }
 
-.element-editor--body {
+.element-editor--nav {
+    margin-bottom: 20px;
+}
+
+.element-editor--settings {
     margin-top: 30px;
+}
+
+.element-editor--inner {
+    padding: 20px;
 }
 
 .element-editor--actions {
@@ -138,7 +160,7 @@
 
 .element-editor .rs-input-group:hover,
 .element-editor .rs-input-group:focus-within,
-.element-editor .rs-input:focus, 
+.element-editor .rs-input:focus,
 .element-editor .rs-input:hover:not(:disabled) {
     border-color: var(--element-color) !important;
     outline-color: var(--element-color) !important;
