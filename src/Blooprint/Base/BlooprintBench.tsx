@@ -1,24 +1,20 @@
 import React, {useState} from 'react';
 import SimpleBar from "simplebar-react";
-import UiElement from "./UiElement";
-import ElementEditor from "./ElementEditor";
-import ElementView from "./ElementView";
+import BlooprintEditor from "./BlooprintEditor";
+import BlooprintView from "./BlooprintView";
 import Canvas, {CanvasAppearance, CanvasSize} from "./Canvas";
 import {Form, Radio, RadioGroup} from "rsuite";
-import Blooprint from "./Blooprint";
+import Blooprint, {BlooprintMap} from "./Blooprint";
 
 export type BlooprintBenchParams = {
     blooprint: Blooprint,
-    blooprintElement?: UiElement
+    blooprintMap?: BlooprintMap
 }
 
 export default function BlooprintBench(props: BlooprintBenchParams) {
-    if (!props.blooprintElement) {
-        return <h1>Blooprint is loading</h1>
-    }
-
     const [appearance, setAppearance] = useState(CanvasAppearance.screen);
     const [size, setSize] = useState(CanvasSize.web);
+    const [blooprint, setBlooprint] = useState(props.blooprint.root);
 
     try {
         return (
@@ -26,7 +22,7 @@ export default function BlooprintBench(props: BlooprintBenchParams) {
                 <div className={'workspace-title'}>Content editor proof of concept</div>
                 <div className='workspace'>
                     <SimpleBar style={{maxHeight: '100%'}} className='workspace-editor'>
-                        <ElementEditor element={props.blooprintElement} blooprint={props.blooprint} />
+                        <BlooprintEditor element={blooprint} blooprint={props.blooprint} onUpdate={setBlooprint} />
                     </SimpleBar>
                     <div className='workspace-viewer'>
                         <Form.Group className={'workspace-viewer--settings'}>
@@ -49,7 +45,7 @@ export default function BlooprintBench(props: BlooprintBenchParams) {
                             </Form.Group>
                         </Form.Group>
                         <Canvas appearance={appearance} size={size}>
-                            <ElementView element={props.blooprintElement} blooprint={props.blooprint} />
+                            <BlooprintView element={blooprint} blooprint={props.blooprint} />
                         </Canvas>
                     </div>
                 </div>

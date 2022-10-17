@@ -1,9 +1,22 @@
 import React from 'react';
-import {ElementViewProps} from "../../Base/BlooprintConfiguration";
-import Image from "../Elements/Image";
+import {BlooprintViewProps} from "../../Base/BlooprintConfiguration";
+import {Image} from "../Data/ExampleElements";
+import {DefaultSettings} from "../Data/ExampleSettings";
 
-export default function ImageView(props: ElementViewProps<Image>) {
+export default function ImageView(props: BlooprintViewProps<Image>) {
+  const { element } = props;
+  const image = element.settings.Image;
+  
+  const margins = {...DefaultSettings.Margins, ...element.settings.Margins};
+  
+  const style = {
+    marginTop: margins.top,
+    marginBottom: margins.bottom,
+    marginLeft: margins.left,
+    marginRight: margins.right,
+  }
+  
   return (
-    <img alt={props.element.alt} src={props.element.url} />
+    <img style={style} alt={image.alt} src={image.url} />
   )
 }

@@ -1,49 +1,26 @@
-import React, {Component} from 'react';
+import React, {Component, useState} from 'react';
 
 import './ContentEditor.css';
 import "simplebar/src/simplebar.css";
 
-import ExampleTree from './Demo/Data/ExampleTree';
+import ExampleBlooprint from './Demo/Data/ExampleBlooprint';
 import ExampleConfiguration from "./Demo/Data/ExampleConfiguration";
-import Container from "./Demo/Elements/Container";
 import BlooprintBench from "./Base/BlooprintBench";
-import Blooprint from "./Base/Blooprint";
-import UiElement from "./Base/UiElement";
+import Blooprint, {BlooprintMap} from "./Base/Blooprint";
+import {DefaultElements} from "./Demo/Data/ExampleElements";
 
-const defaultElement = () => new Container();
 const exampleBlooprint = new Blooprint({
-    initial: ExampleTree,
-    defaultElement,
+    initial: ExampleBlooprint,
+    defaultElement: () => DefaultElements.Container,
     config: ExampleConfiguration
 });
-exampleBlooprint.build();
 
-type stateProps = {
-    blooprint?: UiElement
-}
-
-export default class ContentEditor extends Component {
-    private blooprint: Blooprint = exampleBlooprint;
-    state: stateProps = {
-        blooprint: undefined
-    }
-
-    constructor(props: any) {
-        super(props);
-        
-        const self = this;
-        
-        self.state.blooprint = self.blooprint.build();
-    }
+export default function ContentEditor(props: any) {
+    const [bootstrapped, setBootstrapped] = useState(false);
     
-    componentDidMount() {
-        let self = this;
-        self.blooprint.onBuilt(blooprintElement => self.setState({
-            blooprint: blooprintElement
-        }));
+    if (!bootstrapped) {
+        setBootstrapped(true);
     }
-    
-    render() {
-        return <BlooprintBench blooprintElement={this.state.blooprint} blooprint={this.blooprint} />
-    }
-}
+
+    return <BlooprintBench blooprint={exampleBlooprint} />
+} 

@@ -1,20 +1,24 @@
 import React from 'react';
-import {ElementViewProps} from "../../Base/BlooprintConfiguration";
-import List from "../Elements/List";
-import {FontSettings} from "../Elements/Mixins";
+import {BlooprintViewProps} from "../../Base/BlooprintConfiguration";
+import {List} from "../Data/ExampleElements";
+import {DefaultSettings} from "../Data/ExampleSettings";
 
-export default function ListView(props: ElementViewProps<List>) {
-  let fontOptions = {...new FontSettings().font, ...props.element.font};
+export default function ListView(props: BlooprintViewProps<List>) {
+  const { element } = props;
+  
+  const fontOptions = {...DefaultSettings.Font, ...element.settings.Font};
+  
+  const list = element.settings.List;
 
-  return props.element.ordered 
+  return list.ordered 
     ? (
       <ol>
-        {props.element.items.map((text, index) => <li key={index} style={fontOptions}>{text}</li>)}
+        {list.items.map((text, index) => <li key={index} style={fontOptions}>{text}</li>)}
       </ol>
     )
     : (
       <ul>
-        {props.element.items.map((text, index) => <li key={index} style={fontOptions}>{text}</li>)}
+        {list.items.map((text, index) => <li key={index} style={fontOptions}>{text}</li>)}
       </ul>
     )
 }

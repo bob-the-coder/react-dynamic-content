@@ -1,35 +1,36 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Form, Input, InputGroup, RadioGroup, Radio} from 'rsuite';
 import InputGroupButton from 'rsuite/esm/InputGroup/InputGroupButton';
 import {SettingsEditorProps} from "../../Base/BlooprintConfiguration";
-import {ListSettings} from "../Elements/Mixins";
-import UiElement from "../../Base/UiElement";
+import {ListSettings} from "../Data/ExampleSettings";
 
-export default function ListSettingsEditor<TProps extends SettingsEditorProps<UiElement & ListSettings>>(props: TProps) {
-    const orderType = props.element.ordered ? 'Ordered' : 'Unordered';
+export default function ListSettingsEditor(props: SettingsEditorProps<ListSettings>) {
+    const { element, settings, blooprint } = props;
+    
+    const orderType = settings.ordered ? 'Ordered' : 'Unordered';
 
     function updateElement(newElement: any) {
-        props.blooprint.updateElement({...props.element, ...newElement});
+        blooprint.updateElement({...props.element, ...newElement});
+    }
+    
+    function updateOrderType(orderType: string) {
+        settings.ordered = orderType === 'Ordered';
+        props.updateSettings(settings);
     }
 
     function addItem() {
-        let items = props.element.items || [];
-        items.push('');
-        updateElement({items});
+        settings.items.push('');
+        props.updateSettings(settings);
     }
 
     function removeItem(index: number) {
-        let items = props.element.items;
-        items.splice(index, 1);
-
-        updateElement({items});
+        settings.items.splice(index, 1);
+        props.updateSettings(settings);
     }
 
     function updateItem(value: string, index: number) {
-        let items = props.element.items;
-        items[index] = value;
-
-        updateElement({items});
+        settings.items[index] = value;
+        props.updateSettings(settings);
     }
 
     function renderItemEditor(item: string, index: number) {
@@ -45,10 +46,6 @@ export default function ListSettingsEditor<TProps extends SettingsEditorProps<Ui
         )
     }
 
-    function updateOrderType(orderType: string) {
-        updateElement({ordered: orderType === 'Ordered'})
-    }
-
     return (
         <Form.Group key={Math.random()}>
             <Form.Group>
@@ -58,7 +55,7 @@ export default function ListSettingsEditor<TProps extends SettingsEditorProps<Ui
                 </RadioGroup>
             </Form.Group>
             <Form.Group>
-                {props.element.items.map(renderItemEditor)}
+                {settings.items.map(renderItemEditor)}
             </Form.Group>
         </Form.Group>
     )

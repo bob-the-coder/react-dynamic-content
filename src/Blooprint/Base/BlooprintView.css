@@ -1,0 +1,54 @@
+﻿.element-view {
+    padding: 10px;
+    transition: all ease-in-out .15s;
+}
+.element-view .element-view {
+    padding: 0;
+}
+.element-view--obstructed {
+    opacity: 0.2;
+}
+
+.element-view img {
+    max-width: 100%;
+}
+
+.element-view {
+    position: relative;
+    border-radius: 4px;
+    --element-color: white;
+}
+
+.element-view--highlight {
+    position: relative;
+    box-shadow: 0 0 0 1px var(--element-color);
+}
+
+.element-view--highlight::before {
+    position: absolute;
+    content: '';
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background-color: var(--element-color);
+    box-shadow: 0 0 0 20px var(--element-color);
+    opacity: 0.2;
+    z-index: -1;
+}
+
+.element-view--container {
+    --element-color: rgb(12, 156, 47);
+}
+
+.element-view--text {
+    --element-color: rgb(0, 135, 180);
+}
+
+.element-view--image {
+    --element-color: lime;
+}
+
+.element-view--list {
+    --element-color: orange;
+}

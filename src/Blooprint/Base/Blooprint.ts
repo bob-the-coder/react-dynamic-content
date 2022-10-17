@@ -1,146 +1,132 @@
-﻿import UiElement from "./UiElement";
-import BlooprintConfiguration, {
-    ElementViewProvider,
-    SettingsConfiguration
-} from "./BlooprintConfiguration";
-import {UiSettings} from "./UiSettings";
+﻿import {guid} from "rsuite/utils";
+import BlooprintConfiguration from "./BlooprintConfiguration";
 
-export type BlooprintParams = {
-    initial: UiElement | UiElement[],
-    config: BlooprintConfiguration,
-    defaultElement: (...args: any) => UiElement,
+export type BlooprintElement = {
+    id: string;
+    parentId?: string;
+    type?: string;
+    isHighlighted: boolean;
+    settings: {[key: string]: BlooprintSettings};
+    children?: BlooprintElement[];
 }
 
+export type BlooprintSettings = {
+    type?: string;
+}
+
+export type BlooprintParams = {
+    initial: BlooprintElement | BlooprintElement[],
+    config: BlooprintConfiguration,
+    defaultElement: (...args: any) => BlooprintElement,
+}
+
+export type BlooprintMap = {[key: string]: BlooprintElement};
+
 export default class Blooprint {
-    private readonly elements: UiElement[] = [];
-    private blooprint: UiElement = new UiElement('');
-
-    private config: BlooprintConfiguration;
-    private readonly defaultElement: (...args: any) => UiElement;
-    private buildCallback?: (blooprint: UiElement) => any;
-
+    public elements: BlooprintMap = {};
+    private readonly defaultElement: (...args: any) => BlooprintElement;
+    private buildCallback?: (blooprintMap: BlooprintMap) => any;
+    
+    public config: BlooprintConfiguration;
+    public root: BlooprintElement;
+    
     constructor(params: BlooprintParams) {
         this.config = params.config;
         this.defaultElement = params.defaultElement
 
+        let root: BlooprintElement;
         if (Array.isArray(params.initial)) {
-            this.elements = params.initial.map(_ => _);
+            root = this.parseList(params.initial);
         } else {
-            this.elements = Blooprint.parse(params.initial, '');
+            root = params.initial;
         }
+        if (!root.id) root.id = guid();
+        
+        this.elements = {};
+        this.deconstructElement(root);
+        this.root = this.elements[root.id];
     }
 
-    private static parse(element: UiElement, parentId: string): UiElement[] {
-        if (!element) return [];
+    private parseElement(current: BlooprintElement, elements: BlooprintElement[]) {
+        current.children = elements.filter(element => element.parentId === current.id);
+        if (!current.children || current.children.length === 0) return current;
 
-        element.parentId = parentId;
-        if (!element.children || element.children.length === 0) {
-            return [element];
-        }
-
-        let elementTree: UiElement[] = [element];
-        for (let i = 0; i < element.children.length; i++) {
-            let subTree = Blooprint.parse(element.children[i], element.id);
-            elementTree = elementTree.concat(subTree);
-        }
-
-        return elementTree;
-    }
-
-    private findById(id: string): UiElement {
-        let matches = this.elements.filter(element => element.id === id);
-        if (matches.length !== 1) throw new Error(`There is more than one item with self id. (id: ${id})`);
-
-        return matches[0] || null;
-    }
-
-    private removeById(id: string) {
-        let element = this.findById(id);
-
-        this.elements.splice(this.elements.indexOf(element), 1);
-    }
-
-    private findChildren(id: string): UiElement[] {
-        return this.elements.filter(element => element.parentId === id);
-    }
-
-    private buildElement(parent: UiElement) {
-        parent = {
-            ...parent,
-            children: this.findChildren(parent.id)
-        }
-        if (parent.children.length === 0) return parent;
-
-        for (let i = 0; i < parent.children.length; i++) {
-            let element = parent.children[i];
+        for (let i = 0; i < current.children.length; i++) {
+            let element = current.children[i];
             if (!element.children || element.children.length === 0) continue;
 
-            parent.children[i] = this.buildElement(element);
+            current.children[i] = this.parseElement(element, elements);
         }
 
-        return parent;
-    }
-
-    build() {
-        //console.log(self._elements);
-        // console.log(contentTree);
-        this.blooprint = this.buildElement(this.elements[0]);
-
-        if (this.buildCallback) this.buildCallback(this.blooprint);
-        
-        return this.blooprint;
+        return current;
     }
     
-    onBuilt(callback: (arg: UiElement) => any) {
-        this.buildCallback = callback;
+    private parseList(elements: BlooprintElement[]) {
+        const possibleRoots = elements.filter(element => !element.parentId);
+        if (possibleRoots.length === 0) throw new Error('Sequence contains no root element.');
+        if (possibleRoots.length > 1) throw new Error('Sequence should contain a single root element.');
+        
+        const root = possibleRoots[0]
+        
+        return this.parseElement(root, elements);
     }
-
-    addElement(parent: UiElement, type: string) {
-        if (!parent) throw new Error(`Container element is missing.`);
-        let elementConfig = this.config.getConfiguration(type);
-        if (!elementConfig) throw new Error(`${type} is not a configured element.`);
-
-        this.elements.push(elementConfig.defaultValue);
-        this.build();
-    }
-
-    removeElement(element: UiElement) {
-        this.removeById(element.id);
-        if (!element.children || element.children.length === 0) return;
-
-        let children = this.findChildren(element.id);
-        for (let i = 0; i < children.length; i++) {
-            this.removeElement(children[i]);
+    
+    private deconstructElement(element: BlooprintElement, parentId?: string) {
+        if (!element.type) throw new Error('Undefined element type.');
+        if (!element.id) element.id = guid();
+        
+        const childElements = element.children;
+        
+        element.parentId = parentId;
+        element.children = [];
+        this.elements[element.id] = element;
+        
+        if (!childElements || childElements.length === 0) return;
+        
+        for (let i = 0; i < childElements.length; i++){
+            this.deconstructElement(childElements[i], element.id);
         }
+    }
+    
+    build() {
+        if (this.buildCallback) this.buildCallback(this.elements);
+    }
+    
+    updateElement<T extends BlooprintElement>(element: T) {
+        if (!element.id && !this.elements[element.id]) return;
 
-        if (!this.elements.length) this.elements.push(this.defaultElement());
+        this.elements[element.id] = element;
+        
+        this.build();
+    }
+    
+    updateSettings(id: string, settings: BlooprintSettings) {
+        if (!settings.type) throw new Error("Invalid settings.");
+        
+        if (!this.elements[id]) return;
+        
+        this.elements[id].settings[settings.type] = settings;
         this.build();
     }
 
-    updateElement(newElement: UiElement) {
-        let element = this.findById(newElement.id);
-
-        this.elements[this.elements.indexOf(element)] = newElement;
-        this.build();
-    }
-
-    highlight(element?: UiElement) {
-        for (let i = 0; i < this.elements.length; i++) {
-            if (!element) this.elements[i].isHighlighted = false;
-            else this.elements[i].isHighlighted = this.elements[i].id === element.id;
-        }
-        this.build();
+    highlight(id?: string) {
+        if (id) console.log(`Element ${id} is being highlighted.`)
+        else console.log('Element is no longer being highlighted.');
     }
 
     isHighlighting(): boolean {
-        return this.elements.filter(element => element.isHighlighted).length > 0;
-    }
-
-    getSettings<T extends UiElement>(element: T): SettingsConfiguration<UiSettings>[] {
-        return this.config.getSettings<T>(element);
+        return false;
     }
     
-    getView<T extends UiElement>(element: T): ElementViewProvider<T> {
-        return this.config.getElementView<T>(element);
+    public childrenOf(id: string) {
+        const element = this.elements[id];
+        
+        const childElements = [];
+        for (let k in this.elements) {
+            if (this.elements[k].parentId !== id) continue;
+            
+            childElements.push(this.elements[k]);
+        }
+        return childElements;
     }
 }

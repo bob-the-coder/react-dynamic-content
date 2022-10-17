@@ -1,15 +1,15 @@
-import React from 'react'
+﻿import React from 'react'
 import {Form, InputNumber, InputGroup, FlexboxGrid} from 'rsuite'
 import InputGroupAddon from 'rsuite/esm/InputGroup/InputGroupAddon'
 import {SettingsEditorProps} from "../../Base/BlooprintConfiguration";
-import {PaddingSettings} from "../Data/ExampleSettings";
+import {MarginsSettings} from "../Data/ExampleSettings";
 
 
 const step = 5;
 
-export default function MarginSettingsEditor(props: SettingsEditorProps<PaddingSettings>) {
+export default function MarginSettingsEditor(props: SettingsEditorProps<MarginsSettings>) {
     const { element, settings, blooprint } = props;
-
+    
     function updateMargin(side: string, value: number) {
         switch (side) {
             case 'left':
