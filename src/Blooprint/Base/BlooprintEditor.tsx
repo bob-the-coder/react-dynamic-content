@@ -53,12 +53,12 @@ export default function BlooprintEditor(props: BlooprintEditorProps) {
         const SettingsEditor = blooprint.config.settingsConfig[type].editor;
         const isActive = type === activeTab;
 
-        const updateSettings = (newState: BlooprintSettings) =>
+        const updateSettings = (newSettings: BlooprintSettings) =>
             dispatch(blooprint.updateSettings({
                 elementId,
                 settings: {
                     type,
-                    ...newState
+                    ...newSettings
                 }
             }));
 
@@ -74,8 +74,8 @@ export default function BlooprintEditor(props: BlooprintEditorProps) {
     return (
         <div id={element.id}
              className={`element-editor element-editor--${element.type.toLowerCase()}`}
-            // onMouseLeave={removeHighlight}
-            // onMouseEnter={highlight}
+            onMouseLeave={removeHighlight}
+            onMouseEnter={highlight}
         >
             <div className="element-editor--indicator"></div>
             <div className="element-editor--name">{element.type} {allSettings}</div>

@@ -28,8 +28,8 @@ export type BlooprintElementConfiguration<T extends BlooprintElement> = {
 }
 
 class BlooprintConfiguration {
-    settingsConfig: { [key: string]: SettingsConfiguration<any> } = {};
-    elementConfig: { [key: string]: BlooprintElementConfiguration<any> } = {};
+    settingsConfig: { [key: string]: SettingsConfiguration<any & BlooprintSettings> } = {};
+    elementConfig: { [key: string]: BlooprintElementConfiguration<any & BlooprintElement> } = {};
 
     configureSettings<T extends BlooprintSettings>(settings: SettingsConfiguration<T>) {
         let existing = this.settingsConfig[settings.type];
