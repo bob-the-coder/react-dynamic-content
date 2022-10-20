@@ -8,24 +8,10 @@ import {PaddingSettings} from "../Data/ExampleSettings";
 const step = 5;
 
 export default function MarginSettingsEditor(props: SettingsEditorProps<PaddingSettings>) {
-    const { element, settings, blooprint } = props;
+    const { settings } = props;
 
-    function updateMargin(side: string, value: number) {
-        switch (side) {
-            case 'left':
-                settings.left = value;
-                break;
-            case 'right':
-                settings.right = value;
-                break;
-            case 'top':
-                settings.top = value;
-                break;
-            case 'bottom':
-                settings.bottom = value;
-                break;
-        }
-        props.updateSettings(settings);
+    function updatePadding(side: string, value: number) {
+        props.updateSettings({[side]: value});
     }
 
     return (
@@ -36,7 +22,7 @@ export default function MarginSettingsEditor(props: SettingsEditorProps<PaddingS
                     <Form.Group>
                         <InputGroup {...{inline: 'true'}}>
                             <InputNumber value={settings.top} step={step}
-                                         onChange={value => updateMargin('top', +value)}/>
+                                         onChange={value => updatePadding('top', +value)}/>
                             <InputGroupAddon>px</InputGroupAddon>
                         </InputGroup>
                     </Form.Group>
@@ -45,7 +31,7 @@ export default function MarginSettingsEditor(props: SettingsEditorProps<PaddingS
                     <Form.ControlLabel>Bottom</Form.ControlLabel>
                     <InputGroup>
                         <InputNumber value={settings.bottom} step={step}
-                                     onChange={value => updateMargin('bottom', +value)}/>
+                                     onChange={value => updatePadding('bottom', +value)}/>
                         <InputGroupAddon>px</InputGroupAddon>
                     </InputGroup>
                 </Form.Group>
@@ -55,7 +41,7 @@ export default function MarginSettingsEditor(props: SettingsEditorProps<PaddingS
                     <Form.ControlLabel>Left</Form.ControlLabel>
                     <InputGroup>
                         <InputNumber value={settings.left} step={step}
-                                     onChange={value => updateMargin('left', +value)}/>
+                                     onChange={value => updatePadding('left', +value)}/>
                         <InputGroupAddon>px</InputGroupAddon>
                     </InputGroup>
                 </Form.Group>
@@ -63,7 +49,7 @@ export default function MarginSettingsEditor(props: SettingsEditorProps<PaddingS
                     <Form.ControlLabel>Right</Form.ControlLabel>
                     <InputGroup>
                         <InputNumber value={settings.right} step={step}
-                                     onChange={value => updateMargin('right', +value)}/>
+                                     onChange={value => updatePadding('right', +value)}/>
                         <InputGroupAddon>px</InputGroupAddon>
                     </InputGroup>
                 </Form.Group>

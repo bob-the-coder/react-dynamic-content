@@ -18,8 +18,7 @@ export default function ContainerSettingsEditor(props: SettingsEditorProps<Conta
     const { element, settings, blooprint } = props;
     
     function updateSettings(alignContent: string) {
-        settings.alignContent = alignContent;
-        props.updateSettings(settings);
+        props.updateSettings({alignContent});
     }
     
     return (

@@ -7,21 +7,18 @@ const fontWeights = [ 'Normal', 'Bold' ];
 const colors = [ 'White', 'Black', 'Red', 'Blue', 'Green' ];
 
 export default function FontSettingsEditor(props: SettingsEditorProps<FontSettings>) {
-    const { element, settings, blooprint } = props;
+    const { settings} = props;
 
     function updateSize(fontSize: number) {
-        settings.fontSize = fontSize;
-        props.updateSettings(settings);
+        props.updateSettings({fontSize});
     }
 
     function updateWeight(fontWeight: string) {
-        settings.fontWeight = fontWeight;
-        props.updateSettings(settings);
+        props.updateSettings({fontWeight});
     }
 
     function updateColor(color: string) {
-        settings.color = color;
-        props.updateSettings(settings);
+        props.updateSettings({color});
     }
 
     return (

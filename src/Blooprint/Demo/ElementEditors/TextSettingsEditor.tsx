@@ -5,10 +5,9 @@ import {TextSettings} from "../Data/ExampleSettings";
 
 export default function TextSettingsEditor(props: SettingsEditorProps<TextSettings>) {
     const {settings} = props;
-    
+
     function updateText(text: string) {
-        settings.text = text;
-        props.updateSettings(settings);
+        props.updateSettings({text});
     }
 
     return (

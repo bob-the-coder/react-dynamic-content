@@ -8,24 +8,10 @@ import {MarginsSettings} from "../Data/ExampleSettings";
 const step = 5;
 
 export default function MarginSettingsEditor(props: SettingsEditorProps<MarginsSettings>) {
-    const { element, settings, blooprint } = props;
+    const { settings } = props;
     
     function updateMargin(side: string, value: number) {
-        switch (side) {
-            case 'left':
-                settings.left = value;
-                break;
-            case 'right':
-                settings.right = value;
-                break;
-            case 'top':
-                settings.top = value;
-                break;
-            case 'bottom':
-                settings.bottom = value;
-                break;
-        }
-        props.updateSettings(settings);
+        props.updateSettings({[side]: value});
     }
 
     return (

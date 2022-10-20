@@ -4,15 +4,13 @@ import {SettingsEditorProps} from "../../Base/BlooprintConfiguration";
 import {ImageSettings} from "../Data/ExampleSettings";
 
 export default function ImageSettingsEditor(props: SettingsEditorProps<ImageSettings>) {
-    const { element, settings, blooprint } = props;
+    const { settings} = props;
     function updateUrl(url: string) {
-        settings.url = url;
-        props.updateSettings(settings);
+        props.updateSettings({url});
     }
 
     function updateAlt(alt: string) {
-        settings.alt = alt;
-        props.updateSettings(settings);
+        props.updateSettings({alt});
     }
 
     return (

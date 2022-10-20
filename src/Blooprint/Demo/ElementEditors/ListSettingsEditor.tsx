@@ -5,32 +5,34 @@ import {SettingsEditorProps} from "../../Base/BlooprintConfiguration";
 import {ListSettings} from "../Data/ExampleSettings";
 
 export default function ListSettingsEditor(props: SettingsEditorProps<ListSettings>) {
-    const { element, settings, blooprint } = props;
+    const { settings} = props;
     
     const orderType = settings.ordered ? 'Ordered' : 'Unordered';
 
-    function updateElement(newElement: any) {
-        blooprint.updateElement({...props.element, ...newElement});
-    }
-    
     function updateOrderType(orderType: string) {
         settings.ordered = orderType === 'Ordered';
         props.updateSettings(settings);
     }
 
     function addItem() {
-        settings.items.push('');
-        props.updateSettings(settings);
+        const items = settings.items;
+        items.push('');
+        
+        props.updateSettings({items});
     }
 
     function removeItem(index: number) {
-        settings.items.splice(index, 1);
-        props.updateSettings(settings);
+        const items = settings.items;
+        items.splice(index, 1);
+        
+        props.updateSettings({items});
     }
 
     function updateItem(value: string, index: number) {
-        settings.items[index] = value;
-        props.updateSettings(settings);
+        const items = settings.items;
+        items[index] = value;
+        
+        props.updateSettings({items});
     }
 
     function renderItemEditor(item: string, index: number) {

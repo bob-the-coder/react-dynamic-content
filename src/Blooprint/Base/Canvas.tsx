@@ -69,13 +69,13 @@ export default function Canvas(props: CanvasProps) {
     useEffect(resize);
 
     return (
-        <div className={'element-view--canvas-wrapper'}>
+        // <div className={'element-view--canvas-wrapper'}>
             <SimpleBar style={{maxHeight: '100%'}}>
                 <div ref={canvas} style={{width: style.width, padding}} className={className}>
                     {props.children}
                 </div>
             </SimpleBar>
-            <div style={{width: style.width - 2 * padding}} className='element-view--canvas-overlay'></div>
-        </div>
+            // <div style={{width: style.width - 2 * padding}} className='element-view--canvas-overlay'></div>
+        // </div>
     )
 }

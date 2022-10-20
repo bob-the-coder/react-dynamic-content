@@ -6,14 +6,10 @@ import "simplebar/src/simplebar.css";
 import ExampleBlooprint from './Demo/Data/ExampleBlooprint';
 import ExampleConfiguration from "./Demo/Data/ExampleConfiguration";
 import BlooprintBench from "./Base/BlooprintBench";
-import Blooprint, {BlooprintMap} from "./Base/Blooprint";
-import {DefaultElements} from "./Demo/Data/ExampleElements";
+import {Provider} from "react-redux";
+import {createBlooprintStore} from "./Base/Redux/BlooprintStore";
 
-const exampleBlooprint = new Blooprint({
-    initial: ExampleBlooprint,
-    defaultElement: () => DefaultElements.Container,
-    config: ExampleConfiguration
-});
+const blooprint = createBlooprintStore(ExampleConfiguration, ExampleBlooprint);
 
 export default function ContentEditor(props: any) {
     const [bootstrapped, setBootstrapped] = useState(false);
@@ -22,5 +18,9 @@ export default function ContentEditor(props: any) {
         setBootstrapped(true);
     }
 
-    return <BlooprintBench blooprint={exampleBlooprint} />
+    return (
+        <Provider store={blooprint.reduxStore}>
+            <BlooprintBench blooprint={blooprint} />
+        </Provider>
+    );
 } 

@@ -6,22 +6,14 @@ const h1 = {
     color: 'black'
 };
 
-const textOne = {...DefaultElements.Text};
-textOne.type = 'Text';
-textOne.settings.Text.text = 'From nested trees to personalized frameworks';
+const textOne = DefaultElements.Text('From nested trees to personalized frameworks');
 textOne.settings.Font = {...textOne.settings.Font, ...h1};
 
-const textTwo = {...DefaultElements.Text};
-textTwo.type = 'Text';
-textTwo.settings.Text.text = 'Building a nested tree is fun';
+const textTwo = DefaultElements.Text('Building a nested tree is fun');
 
-const textInner = {...DefaultElements.Text};
-textInner.type = 'Text';
-textInner.settings.Text.text = 'Here is everything you need to get started:';
+const textInner = DefaultElements.Text('Here is everything you need to get started:');
 
-const list = {...DefaultElements.List};
-list.type = 'List';
-    list.settings.List.items = [
+const list = DefaultElements.List([
     "Get yourself an IDE. Any one will do.",
     "Start learning programming. Javascript is a good place to start.",
     "Learn all you can about binary trees.",
@@ -31,27 +23,23 @@ list.type = 'List';
     "Start developing your own framework.",
     "???",
     "Profit."
-];
-    
-const inner = {...DefaultElements.Container};
-inner.type = 'Container';
-inner.children = [textInner, list];
+]);
 
-const lastText = {...DefaultElements.Text};
-lastText.type = 'Text';
-lastText.settings.Text.text = "If you don't think it's this easy, check the source code of this app. It's a few hundred lines.";
+const otherList = DefaultElements.List([
+    "This is another list",
+    "Just testing references",
+]);
 
-const potatoImage = {...DefaultElements.Image};
-potatoImage.type = 'Image';
-potatoImage.settings.Image.url = 'https://www.alimentarium.org/sites/default/files/media/image/2017-02/AL027-01_pomme_de_terre_0_0.jpg';
-potatoImage.settings.Image.alt = 'There should be a potato here';
+const inner = DefaultElements.Container([textInner, list, otherList]);
 
-const potatoText = {...DefaultElements.Text};
-potatoText.type = 'Text';
-potatoText.settings.Text.text = "Here's a potato.";
+const lastText = DefaultElements.Text("If you don't think it's this easy, check the source code of this app. It's a few hundred lines.");
 
-const root = {...DefaultElements.Container};
-root.type = 'Container';
-root.children = [textOne, textTwo, inner, lastText, potatoImage, potatoText];
+const potatoImage = DefaultElements.Image(
+    'https://www.alimentarium.org/sites/default/files/media/image/2017-02/AL027-01_pomme_de_terre_0_0.jpg', '' +
+    'There should be a potato here');
+
+const potatoText = DefaultElements.Text("Here's a potato.");
+
+const root = DefaultElements.Container([textOne, textTwo, inner, lastText, potatoImage, potatoText]);
 
 export default root;

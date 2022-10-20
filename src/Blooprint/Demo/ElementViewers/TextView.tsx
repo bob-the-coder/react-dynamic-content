@@ -6,8 +6,8 @@ import {DefaultSettings} from "../Data/ExampleSettings";
 export default function TextView(props: BlooprintViewProps<Text>) {
   const { element } = props;
   
-  const padding = {...DefaultSettings.Padding, ...element.settings.padding};
-  const margin = {...DefaultSettings.Margins, ...element.settings.margins};
+  const padding = {...DefaultSettings.Padding, ...element.settings.Padding};
+  const margin = {...DefaultSettings.Margins, ...element.settings.Margins};
   const font = {...DefaultSettings.Font, ...element.settings.Font};
   const text = element.settings.Text;
 
