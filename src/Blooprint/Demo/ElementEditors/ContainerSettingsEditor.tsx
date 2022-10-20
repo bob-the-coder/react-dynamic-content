@@ -15,7 +15,7 @@ const displayLabels = {
 }
 const alignOptions: (keyof labels)[] = ['left', 'center', 'right'];
 export default function ContainerSettingsEditor(props: SettingsEditorProps<ContainerSettings>) {
-    const { element, settings, blooprint } = props;
+    const { settings } = props;
     
     function updateSettings(alignContent: string) {
         props.updateSettings({alignContent});

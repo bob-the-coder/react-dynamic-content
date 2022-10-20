@@ -3,7 +3,7 @@ import {BlooprintViewProps} from "./BlooprintConfiguration";
 
 import './BlooprintView.css';
 import {BlooprintElement} from "./Blooprint";
-import {getChildren, useBlooprintSelector} from "./Redux/BlooprintStore";
+import {getChildren, useBlooprintSelector} from "./Redux/BlooprintApi";
 
 export default function BlooprintView(props: BlooprintViewProps<BlooprintElement>) {
     const {blooprint, element} = props;

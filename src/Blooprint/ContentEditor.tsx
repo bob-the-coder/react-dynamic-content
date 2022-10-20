@@ -7,19 +7,13 @@ import ExampleBlooprint from './Demo/Data/ExampleBlooprint';
 import ExampleConfiguration from "./Demo/Data/ExampleConfiguration";
 import BlooprintBench from "./Base/BlooprintBench";
 import {Provider} from "react-redux";
-import {createBlooprintStore} from "./Base/Redux/BlooprintStore";
+import {createBlooprintStore} from "./Base/Redux/BlooprintApi";
 
-const blooprint = createBlooprintStore(ExampleConfiguration, ExampleBlooprint);
+const [blooprint, store] = createBlooprintStore(ExampleConfiguration, ExampleBlooprint);
 
 export default function ContentEditor(props: any) {
-    const [bootstrapped, setBootstrapped] = useState(false);
-    
-    if (!bootstrapped) {
-        setBootstrapped(true);
-    }
-
     return (
-        <Provider store={blooprint.reduxStore}>
+        <Provider store={store}>
             <BlooprintBench blooprint={blooprint} />
         </Provider>
     );

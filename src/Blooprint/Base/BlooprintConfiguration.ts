@@ -1,18 +1,17 @@
 ﻿import {FunctionComponent, ReactElement, ReactNode} from "react";
 import {BlooprintElement, BlooprintSettings, BlooprintSettingsPartial} from "./Blooprint";
-import {BlooprintStore} from "./Redux/BlooprintStore";
+import {BlooprintApi} from "./Redux/BlooprintApi";
 
 export type SettingsEditorProps<T extends BlooprintSettings> = {
-    element: BlooprintElement;
     settings: T;
-    blooprint: BlooprintStore;
+    blooprint: BlooprintApi;
     updateSettings: (settings: BlooprintSettingsPartial) => any;
 }
 export type SettingsEditorProvider<T extends  BlooprintSettings> = FunctionComponent<SettingsEditorProps<T>>;
 
 export type BlooprintViewProps<T extends BlooprintElement> = {
     element: T;
-    blooprint: BlooprintStore;
+    blooprint: BlooprintApi;
     children?: ReactElement | ReactElement[]; 
 }
 export type BlooprintView<T extends BlooprintElement> = FunctionComponent<BlooprintViewProps<T>>;

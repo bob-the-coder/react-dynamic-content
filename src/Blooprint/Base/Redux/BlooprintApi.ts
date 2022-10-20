@@ -1,5 +1,5 @@
-﻿import {configureStore, createSlice, EnhancedStore, PayloadAction, Slice} from '@reduxjs/toolkit';
-import {BlooprintElement, BlooprintMap, BlooprintSettings, BlooprintSettingsPartial} from "../Blooprint";
+﻿import {CaseReducerActions, configureStore, createSlice, EnhancedStore, PayloadAction, Slice} from '@reduxjs/toolkit';
+import {BlooprintElement, BlooprintMap, BlooprintSettingsPartial} from "../Blooprint";
 import {guid} from "rsuite/utils";
 import BlooprintConfiguration from "../BlooprintConfiguration";
 import {useSelector} from "react-redux";
@@ -47,7 +47,7 @@ function getRoot(blooprint: BlooprintMap) {
 export type Blooprint = {
     map: BlooprintMap;
     root: BlooprintElement;
-    highlightedElement: string | undefined,
+    highlightedElement?: string;
     isHighlighting: boolean;
 }
 
@@ -74,7 +74,6 @@ const buildSlice = (config: BlooprintConfiguration, value: BlooprintMap | Bloopr
         initialState: {
             map,
             root,
-            highlightedElement: undefined,
             isHighlighting: false
         },
         reducers: {
@@ -148,15 +147,13 @@ const buildSlice = (config: BlooprintConfiguration, value: BlooprintMap | Bloopr
     });
 }
 
-export type BlooprintStore = {
-    slice: Slice<Blooprint, BlooprintReducer>;
-    reduxStore: EnhancedStore<Blooprint>;
+export type BlooprintApi = CaseReducerActions<BlooprintReducer> & {
     config: BlooprintConfiguration
 }
 
 export const useBlooprintSelector = <T>(selector: (state: Blooprint) => T) => useSelector(selector);
 
-type BlooprintStoreFactory = (config: BlooprintConfiguration, value: BlooprintMap | BlooprintElement) => BlooprintStore;
+type BlooprintStoreFactory = (config: BlooprintConfiguration, value: BlooprintMap | BlooprintElement) => [BlooprintApi, EnhancedStore<Blooprint>];
 
 export const createBlooprintStore: BlooprintStoreFactory = (config: BlooprintConfiguration, value: BlooprintMap | BlooprintElement) => {
     const slice = buildSlice(config, value);
@@ -164,11 +161,10 @@ export const createBlooprintStore: BlooprintStoreFactory = (config: BlooprintCon
         reducer: slice.reducer
     });
     
-    return {
-        slice,
-        reduxStore: store, 
+    return [{
+        ...slice.actions,
         config
-    }
+    }, store]
 }
 
 export const getChildren = (parent: BlooprintElement, map: BlooprintMap) => 

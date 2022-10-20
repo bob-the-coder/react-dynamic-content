@@ -5,10 +5,10 @@ import BlooprintView from "./BlooprintView";
 import Canvas, {CanvasAppearance, CanvasSize} from "./Canvas";
 import {Form, Radio, RadioGroup} from "rsuite";
 import {useSelector} from "react-redux";
-import {Blooprint, BlooprintStore} from "./Redux/BlooprintStore";
+import {Blooprint, BlooprintApi} from "./Redux/BlooprintApi";
 
 export type BlooprintBenchParams = {
-    blooprint: BlooprintStore
+    blooprint: BlooprintApi
 }
 
 export default function BlooprintBench(props: BlooprintBenchParams) {
