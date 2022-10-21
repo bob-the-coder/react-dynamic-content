@@ -1,9 +1,9 @@
 import React from 'react';
-import {BlooprintViewProps} from "../../Base/BlooprintConfiguration";
 import {List} from "../Data/ExampleElements";
 import {DefaultSettings} from "../Data/ExampleSettings";
+import {ElementViewProps} from "../../Base/BlooprintView";
 
-export default function ListView(props: BlooprintViewProps<List>) {
+export default function ListView(props: ElementViewProps<List>) {
   const { element } = props;
   
   const fontOptions = {...DefaultSettings.Font, ...element.settings.Font};

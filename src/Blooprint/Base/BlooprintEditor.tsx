@@ -1,9 +1,8 @@
 import React, {useState} from 'react';
 import {Nav, Panel} from "rsuite";
-import {BlooprintSettings} from "./Blooprint";
 import './BlooprintEditor.css'
-import {useDispatch} from "react-redux";
-import {useBlooprintSelector, BlooprintApi, getChildren} from "./Redux/BlooprintApi";
+import {useBlooprintSelector, BlooprintApi} from "./Redux/BlooprintApi";
+import BlooprintSettingsEditor from "./BlooprintSettingsEditor";
 
 type BlooprintEditorProps = {
     elementId: string;
@@ -13,86 +12,45 @@ type BlooprintEditorProps = {
 export default function BlooprintEditor(props: BlooprintEditorProps) {
     if (!props) return <></>;
     const {elementId, blooprint} = props;
-    const element = useBlooprintSelector(state => state.map[elementId]);
+    const element = useBlooprintSelector(state => state.elements[elementId]);
 
     if (!element || !element.type) {
         return <h2>Broken editor</h2>
     }
 
-    const allSettings = Object.keys(element.settings);
-    const [activeTab, setActiveTab] = useState(allSettings[0]);
-
-    const dispatch = useDispatch();
-
+    const [activeTab, setActiveTab] = useState(element.settings[0]);
 
     function highlight() {
-        dispatch(blooprint.highlightElement({elementId}))
+        // dispatch(blooprint.highlightElement({elementId: element.id}))
     }
 
     function removeHighlight() {
-        dispatch(blooprint.removeHighlight());
-    }
-
-    function renderChildren() {
-        const map = useBlooprintSelector(state => state.map);
-        const children = getChildren(element, map);
-        if (!children || children.length === 0) return <></>;
-
-        return (
-            <div className="element-editor--inner">
-                {children.map(childElement => (
-                    <BlooprintEditor key={childElement.id} elementId={childElement.id} blooprint={blooprint}/>
-                ))}
-            </div>
-        )
-    }
-
-    function renderSettingsEditor(type: string) {
-        if (element.type === 'Container') {
-        }
-        const SettingsEditor = blooprint.config.settingsConfig[type].editor;
-        const isActive = type === activeTab;
-
-        const updateSettings = (newSettings: BlooprintSettings) =>
-            dispatch(blooprint.updateSettings({
-                elementId,
-                settings: {
-                    type,
-                    ...newSettings
-                }
-            }));
-
-        const settingsEditorProps = {blooprint, settings: element.settings[type], updateSettings};
-
-        return (
-            <div key={`${elementId}_${type}`} style={{display: isActive ? 'block' : 'none'}}>
-                <SettingsEditor {...settingsEditorProps} />
-            </div>
-        )
+        // dispatch(blooprint.removeHighlight());
     }
 
     return (
-        <div id={element.id}
-             className={`element-editor element-editor--${element.type.toLowerCase()}`}
+        <div id={element.id} className={`element-editor element-editor--${element.type.toLowerCase()}`}
             onMouseLeave={removeHighlight}
             onMouseEnter={highlight}
         >
             <div className="element-editor--indicator"></div>
-            <div className="element-editor--name">{element.type} {allSettings}</div>
+            <div className="element-editor--name">{element.type} {element.settings}</div>
             <div className="element-editor--settings">
                 <Panel>
                     <Nav activeKey={activeTab} onSelect={setActiveTab} appearance="subtle"
                          className="element-editor--nav">
-                        {allSettings.map(settings => (
+                        {element.settings.map(settings => (
                             <Nav.Item key={settings} eventKey={settings}>{settings}</Nav.Item>
                         ))}
                     </Nav>
-                    {allSettings.map(renderSettingsEditor)}
+                    <BlooprintSettingsEditor elementId={elementId} type={activeTab} blooprint={blooprint} />
                 </Panel>
             </div>
-
-            {renderChildren()}
-
+            <div className="element-editor--inner">
+                {element.children.map(childElement => (
+                    <BlooprintEditor key={childElement} elementId={childElement} blooprint={blooprint}/>
+                ))}
+            </div>
             <div className="element-editor--actions">
                 Actions go here
             </div>

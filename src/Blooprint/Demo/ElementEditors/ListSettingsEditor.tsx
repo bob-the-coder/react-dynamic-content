@@ -9,9 +9,8 @@ export default function ListSettingsEditor(props: SettingsEditorProps<ListSettin
     
     const orderType = settings.ordered ? 'Ordered' : 'Unordered';
 
-    function updateOrderType(orderType: string) {
-        settings.ordered = orderType === 'Ordered';
-        props.updateSettings(settings);
+    function updateOrderType(newOrderType: string) {
+        props.updateSettings({ordered: newOrderType === 'Ordered'});
     }
 
     function addItem() {
@@ -29,7 +28,7 @@ export default function ListSettingsEditor(props: SettingsEditorProps<ListSettin
     }
 
     function updateItem(value: string, index: number) {
-        const items = settings.items;
+        const items = Array.from(settings.items);
         items[index] = value;
         
         props.updateSettings({items});

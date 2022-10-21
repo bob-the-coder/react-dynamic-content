@@ -1,9 +1,9 @@
 import React from 'react';
-import {BlooprintViewProps} from "../../Base/BlooprintConfiguration";
 import {Image} from "../Data/ExampleElements";
 import {DefaultSettings} from "../Data/ExampleSettings";
+import {ElementViewProps} from "../../Base/BlooprintView";
 
-export default function ImageView(props: BlooprintViewProps<Image>) {
+export default function ImageView(props: ElementViewProps<Image>) {
   const { element } = props;
   const image = element.settings.Image;
   

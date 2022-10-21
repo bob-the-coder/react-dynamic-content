@@ -1,6 +1,7 @@
-﻿import {FunctionComponent, ReactElement, ReactNode} from "react";
-import {BlooprintElement, BlooprintSettings, BlooprintSettingsPartial} from "./Blooprint";
+﻿import {FunctionComponent, ReactElement} from "react";
+import {BlooprintElement, BlooprintSettings, BlooprintSettingsMap, BlooprintSettingsPartial} from "./Blooprint";
 import {BlooprintApi} from "./Redux/BlooprintApi";
+import {ElementViewProps} from "./BlooprintView";
 
 export type SettingsEditorProps<T extends BlooprintSettings> = {
     settings: T;
@@ -9,12 +10,6 @@ export type SettingsEditorProps<T extends BlooprintSettings> = {
 }
 export type SettingsEditorProvider<T extends  BlooprintSettings> = FunctionComponent<SettingsEditorProps<T>>;
 
-export type BlooprintViewProps<T extends BlooprintElement> = {
-    element: T;
-    blooprint: BlooprintApi;
-    children?: ReactElement | ReactElement[]; 
-}
-export type BlooprintView<T extends BlooprintElement> = FunctionComponent<BlooprintViewProps<T>>;
 
 export type SettingsConfiguration<T extends BlooprintSettings> = {
     type: string;
@@ -24,7 +19,7 @@ export type SettingsConfiguration<T extends BlooprintSettings> = {
 
 export type BlooprintElementConfiguration<T extends BlooprintElement> = {
     type: string;
-    view: BlooprintView<T>
+    view: FunctionComponent<ElementViewProps<T>>
 }
 
 class BlooprintConfiguration {

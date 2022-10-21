@@ -1,42 +1,54 @@
-import React from 'react';
-import {BlooprintViewProps} from "./BlooprintConfiguration";
+import React, {FunctionComponent, ReactElement} from 'react';
 
 import './BlooprintView.css';
-import {BlooprintElement} from "./Blooprint";
-import {getChildren, useBlooprintSelector} from "./Redux/BlooprintApi";
+import {BlooprintApi, useBlooprintSelector} from "./Redux/BlooprintApi";
+import {BlooprintElement, BlooprintSettingsMap} from "./Blooprint";
 
-export default function BlooprintView(props: BlooprintViewProps<BlooprintElement>) {
-    const {blooprint, element} = props;
+export type ElementViewProps<T extends BlooprintElement> = {
+    element: T,
+    children?: ReactElement | ReactElement[]
+}
+
+type BlooprintViewProps = {
+    elementId: string;
+    blooprint: BlooprintApi;
+}
+export type BlooprintView = FunctionComponent<BlooprintViewProps>;
+
+const BlooprintView: BlooprintView = (props: BlooprintViewProps) => {
+    const {blooprint, elementId} = props;
+    const element = useBlooprintSelector(state => state.elements[elementId]);
 
     if (!element.type) return <h2>Broken view</h2>;
 
-    const isHighlighting = useBlooprintSelector(state => state.isHighlighting);
     let className = `element-view element-view--${element.type.toLowerCase()}`;
-    if (element.isHighlighted) {
+
+    const highlightedElement = useBlooprintSelector(state => state.highlightedElement);
+    if (element.id === highlightedElement) {
         className += ' element-view--highlight';
-    } else if (isHighlighting && !element.hasChildren) {
+    } else if (highlightedElement && !element.children.length) {
         className += ' element-view--obstructed';
     }
 
-    let elementView = blooprint.config.elementConfig[element.type].view;
-
-    function renderChildren(children: BlooprintElement[]) {
-        return children.map(childElement => (
-            <BlooprintView key={`${element.id}_${childElement.id}`} element={childElement} blooprint={blooprint}/>
-        ));
-    }
-
-    function renderView() {
-        const map = useBlooprintSelector(state => state.map);
-        const children = getChildren(element, map);
-        if (!children || children.length === 0) return React.createElement(elementView, props);
-
-        return React.createElement(elementView, {...props, children: renderChildren(children)});
-    }
+    const ElementView = blooprint.config.elementConfig[element.type].view;
+    const settings: BlooprintSettingsMap = {};
+    const allSettings = useBlooprintSelector(state => state.settings);
+    element.settings.forEach(settingsType => settings[settingsType] = allSettings[`${elementId}_${settingsType}`]);
+    
+    const compiledElement:BlooprintElement = {
+        id: elementId,
+        parentId: element.parentId,
+        settings
+    } 
 
     return (
         <div key={element.id} className={className}>
-            {renderView()}
+            <ElementView element={compiledElement}>
+                {element.children.map(childElementId => (
+                    <BlooprintView key={childElementId} elementId={childElementId} blooprint={blooprint}/>
+                ))}
+            </ElementView>
         </div>
     )
 }
+export default BlooprintView;

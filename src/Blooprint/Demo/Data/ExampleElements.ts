@@ -42,8 +42,6 @@ export type List = BlooprintElement & {
 
 const DefaultBlooprintElement: BlooprintElement = {
     id: '',
-    isHighlighted: false,
-    hasChildren: false,
     settings: {}
 };
 

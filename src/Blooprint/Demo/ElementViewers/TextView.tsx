@@ -1,9 +1,9 @@
 import React from 'react'
-import {BlooprintViewProps} from "../../Base/BlooprintConfiguration";
 import {Text} from '../Data/ExampleElements';
 import {DefaultSettings} from "../Data/ExampleSettings";
+import {ElementViewProps} from "../../Base/BlooprintView";
 
-export default function TextView(props: BlooprintViewProps<Text>) {
+export default function TextView(props: ElementViewProps<Text>) {
   const { element } = props;
   
   const padding = {...DefaultSettings.Padding, ...element.settings.Padding};

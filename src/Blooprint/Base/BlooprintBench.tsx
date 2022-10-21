@@ -4,8 +4,7 @@ import BlooprintEditor from "./BlooprintEditor";
 import BlooprintView from "./BlooprintView";
 import Canvas, {CanvasAppearance, CanvasSize} from "./Canvas";
 import {Form, Radio, RadioGroup} from "rsuite";
-import {useSelector} from "react-redux";
-import {Blooprint, BlooprintApi} from "./Redux/BlooprintApi";
+import {useBlooprintSelector, BlooprintApi} from "./Redux/BlooprintApi";
 
 export type BlooprintBenchParams = {
     blooprint: BlooprintApi
@@ -15,7 +14,7 @@ export default function BlooprintBench(props: BlooprintBenchParams) {
     const [appearance, setAppearance] = useState(CanvasAppearance.screen);
     const [size, setSize] = useState(CanvasSize.web);
     const blooprint = props.blooprint;
-    const root = useSelector((blooprint: Blooprint) => blooprint.root);
+    const root = useBlooprintSelector(state => state.root);
 
     try {
         return (
@@ -23,7 +22,8 @@ export default function BlooprintBench(props: BlooprintBenchParams) {
                 <div className={'workspace-title'}>Content editor proof of concept</div>
                 <div className='workspace'>
                     <SimpleBar style={{maxHeight: '100%'}} className='workspace-editor'>
-                        <BlooprintEditor elementId={root.id} blooprint={blooprint} />
+                        <BlooprintEditor elementId={'000'} blooprint={blooprint} />
+                        <BlooprintEditor elementId={root} blooprint={blooprint} />
                     </SimpleBar>
                     <div className='workspace-viewer'>
                         <Form.Group className={'workspace-viewer--settings'}>
@@ -46,7 +46,7 @@ export default function BlooprintBench(props: BlooprintBenchParams) {
                             </Form.Group>
                         </Form.Group>
                         <Canvas appearance={appearance} size={size}>
-                            <BlooprintView element={root} blooprint={blooprint} />
+                            <BlooprintView elementId={root} blooprint={blooprint} />
                         </Canvas>
                     </div>
                 </div>
