@@ -4,7 +4,7 @@ import './App.css';
 import 'rsuite/dist/rsuite.min.css'
 import {CustomProvider, Input} from 'rsuite';
 
-import ContentEditor from './Blooprint/ContentEditor';
+import ContentEditor from './Blueprint/ContentEditor';
 import {configureStore, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {Provider, useDispatch, useSelector} from "react-redux";
 
