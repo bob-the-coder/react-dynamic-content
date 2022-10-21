@@ -17,6 +17,7 @@
 }
 
 .element-view--canvas-overlay {
+    z-index: 1;
     position: absolute;
     top: var(--canvas-border);
     left: 50%;
@@ -36,6 +37,7 @@
 }
 
 .workspace-viewer--canvas > .element-view {
+    z-index: 0;
     background: white;
     border: 1px solid #FFFFFF16;
 }

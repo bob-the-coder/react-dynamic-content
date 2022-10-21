@@ -1,25 +1,20 @@
 import React from 'react';
 import {Form, Input,} from 'rsuite';
 import {SettingsEditorProps} from "../../Base/BlooprintConfiguration";
-import UiElement from "../../Base/UiElement";
-import {TextSettings} from "../Elements/Mixins";
+import {TextSettings} from "../Data/ExampleSettings";
 
-
-export default function TextSettingsEditor<TProps extends SettingsEditorProps<UiElement & TextSettings>>(props: TProps) {
-    function updateElement(text: string) {
-        props.element.text = text;
-        props.blooprint.updateElement(props.element);
-    }
+export default function TextSettingsEditor(props: SettingsEditorProps<TextSettings>) {
+    const {settings} = props;
 
     return (
-        <Form.Group key={Math.random()}>
+        <Form.Group>
             <Form.ControlLabel>Text</Form.ControlLabel>
             <Input name='text'
                    placeholder='Type your text here'
                    as='textarea'
-                   defaultValue={props.element.text}
+                   value={settings.text}
                    rows={5}
-                   onChange={updateElement}/>
+                   onChange={text => props.updateSettings({ text })} />
         </Form.Group>
     )
 }

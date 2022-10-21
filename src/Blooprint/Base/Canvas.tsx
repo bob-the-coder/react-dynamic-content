@@ -70,12 +70,12 @@ export default function Canvas(props: CanvasProps) {
 
     return (
         <div className={'element-view--canvas-wrapper'}>
+            <div style={{width: style.width - 2 * padding}} className='element-view--canvas-overlay'></div>
             <SimpleBar style={{maxHeight: '100%'}}>
                 <div ref={canvas} style={{width: style.width, padding}} className={className}>
                     {props.children}
                 </div>
             </SimpleBar>
-            <div style={{width: style.width - 2 * padding}} className='element-view--canvas-overlay'></div>
         </div>
     )
 }

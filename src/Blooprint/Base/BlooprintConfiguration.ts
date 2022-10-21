@@ -1,63 +1,45 @@
-﻿import UiElement from "./UiElement";
-import {UiSettings} from "./UiSettings";
-import {ReactElement, ReactNode} from "react";
-import Blooprint from "./Blooprint";
+﻿import {FunctionComponent, ReactElement} from "react";
+import {BlooprintElement, BlooprintSettings, BlooprintSettingsMap, BlooprintSettingsPartial} from "./Blooprint";
+import {BlooprintApi} from "./Redux/BlooprintApi";
+import {ElementViewProps} from "./BlooprintView";
 
-export type SettingsEditorProps<T extends UiSettings> = {
-    element: T;
-    blooprint: Blooprint;
+export type SettingsEditorProps<T extends BlooprintSettings> = {
+    settings: T;
+    blooprint: BlooprintApi;
+    updateSettings: (settings: BlooprintSettingsPartial) => any;
 }
-export type SettingsEditorProvider<T extends UiSettings> = (props: SettingsEditorProps<UiElement & T>) => ReactNode;
+export type SettingsEditorProvider<T extends  BlooprintSettings> = FunctionComponent<SettingsEditorProps<T>>;
 
-export type ElementViewProps<T extends UiElement> = {
-    element: T,
-    blooprint: Blooprint
-    children?: ReactElement | ReactElement[]
-}
-export type ElementViewProvider<T extends UiElement> = (props: ElementViewProps<T>) => ReactNode;
 
-export type SettingsConfiguration<T extends UiSettings> = {
+export type SettingsConfiguration<T extends BlooprintSettings> = {
     type: string;
+    defaultValue: T;
     editor: SettingsEditorProvider<T>
 }
 
-export type ElementConfiguration<T extends UiElement> = {
+export type BlooprintElementConfiguration<T extends BlooprintElement> = {
     type: string;
-    defaultValue: T;
-    settings: string[];
-    view: ElementViewProvider<T>
+    view: FunctionComponent<ElementViewProps<T>>
 }
 
 class BlooprintConfiguration {
-    private settingsConfig: { [key: string]: SettingsConfiguration<any> } = {};
-    private elementConfig: { [key: string]: ElementConfiguration<any> } = {};
+    settingsConfig: { [key: string]: SettingsConfiguration<any & BlooprintSettings> } = {};
+    elementConfig: { [key: string]: BlooprintElementConfiguration<any & BlooprintElement> } = {};
 
-    configureSettings<T extends UiSettings>(settings: SettingsConfiguration<T>) {
+    configureSettings<T extends BlooprintSettings>(settings: SettingsConfiguration<T>) {
         let existing = this.settingsConfig[settings.type];
         if (existing) throw new Error(`${settings.type} is already configured.`);
+        
+        settings.defaultValue.type = settings.type;
 
         this.settingsConfig[settings.type] = settings;
     }
 
-    configureElement<T extends UiElement>(config: ElementConfiguration<T>) {
-        let existing = this.elementConfig[config.type];
+    configureElement<T extends BlooprintElement>(config: BlooprintElementConfiguration<T>) {
+        const existing = this.elementConfig[config.type];
         if (existing) throw new Error(`${config.type} is already configured.`);
-
-        this.elementConfig[config.type] = config;
-    }
-
-    getSettings<T extends UiElement>(element: T): SettingsConfiguration<UiSettings>[] {
-        let elementSettings = this.getConfiguration(element.type).settings;
         
-        return elementSettings.map(type => this.settingsConfig[type])
-    }
-    
-    getConfiguration(type: string) {
-        return this.elementConfig[type];
-    }
-    
-    getElementView<T extends UiElement>(element: T): ElementViewProvider<T> {
-        return this.elementConfig[element.type].view;
+        this.elementConfig[config.type] = config;
     }
 }
 

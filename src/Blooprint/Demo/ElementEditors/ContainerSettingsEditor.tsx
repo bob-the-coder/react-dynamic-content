@@ -1,8 +1,7 @@
 import React from 'react';
 import {Form, Radio, RadioGroup} from 'rsuite';
 import {SettingsEditorProps} from "../../Base/BlooprintConfiguration";
-import UiElement from "../../Base/UiElement";
-import {ContainerSettings} from "../Elements/Mixins";
+import {ContainerSettings} from "../Data/ExampleSettings";
 
 type labels = {
     left: string;
@@ -15,18 +14,17 @@ const displayLabels = {
     center: 'Centered'
 }
 const alignOptions: (keyof labels)[] = ['left', 'center', 'right'];
-export default function ContainerSettingsEditor<TProps extends SettingsEditorProps<UiElement & ContainerSettings>>(props: TProps) {
-    let { element, blooprint } = props;
+export default function ContainerSettingsEditor(props: SettingsEditorProps<ContainerSettings>) {
+    const { settings } = props;
     
     function updateSettings(alignContent: string) {
-        element.alignContent = alignContent;
-        blooprint.updateElement(element);
+        props.updateSettings({alignContent});
     }
     
     return (
-        <Form.Group key={Math.random()}>
+        <Form.Group>
             <Form.ControlLabel>Align inner elements</Form.ControlLabel>
-            <RadioGroup value={element.alignContent} onChange={align => updateSettings(align.toString())} inline={true}>
+            <RadioGroup value={settings.alignContent} onChange={align => updateSettings(align.toString())} inline={true}>
                 {alignOptions.map((option, i) => (
                     <Radio key={i} value={option}>{displayLabels[option]}</Radio>
                 ))}

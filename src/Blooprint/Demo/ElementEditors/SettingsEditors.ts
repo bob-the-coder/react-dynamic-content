@@ -4,6 +4,7 @@ import ImageSettingsEditor from "./ImageSettingsEditor";
 import ListSettingsEditor from "./ListSettingsEditor";
 import PaddingSettingsEditor from "./PaddingSettingsEditor";
 import TextSettingsEditor from "./TextSettingsEditor";
+import MarginSettingsEditor from "./MarginsSettingsEditor";
 
 export default {
     Container: ContainerSettingsEditor,
@@ -11,5 +12,6 @@ export default {
     Font: FontSettingsEditor,
     Image: ImageSettingsEditor,
     Padding: PaddingSettingsEditor,
-    List: ListSettingsEditor
+    List: ListSettingsEditor,
+    Margin: MarginSettingsEditor
 }

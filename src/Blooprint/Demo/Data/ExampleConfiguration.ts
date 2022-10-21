@@ -1,68 +1,71 @@
-﻿import {UiElementType, UiSettingsType} from "../Elements/UiElementType";
-import {
+﻿import {
     ContainerSettings,
     FontSettings,
     ImageSettings,
     ListSettings,
+    MarginsSettings,
     PaddingSettings,
-    TextSettings
-} from "../Elements/Mixins";
-import Container from '../Elements/Container';
-import Text from '../Elements/Text';
-import Image from '../Elements/Image';
-import List from '../Elements/List';
+    TextSettings,
+    DefaultSettings
+} from "./ExampleSettings";
+import {Container, Text, Image, List, DefaultElements} from "./ExampleElements";
+
 import BlooprintConfiguration from "../../Base/BlooprintConfiguration";
 import SettingsEditors from "../ElementEditors/SettingsEditors";
 import Views from "../ElementViewers/Views";
 
+
 const config = new BlooprintConfiguration();
 config.configureSettings<FontSettings>({
-    type: UiSettingsType.Font,
+    type: 'Font',
+    defaultValue: DefaultSettings.Font,
     editor: SettingsEditors.Font
 });
 config.configureSettings<ContainerSettings>({
-    type: UiSettingsType.Container,
+    type: 'Container',
+    defaultValue: DefaultSettings.Container,
     editor: SettingsEditors.Container
 });
 config.configureSettings<ImageSettings>({
-    type: UiSettingsType.Image,
+    type: 'Image',
+    defaultValue: DefaultSettings.Image,
     editor: SettingsEditors.Image
 });
 config.configureSettings<ListSettings>({
-    type: UiSettingsType.List,
+    type: 'List',
+    defaultValue: DefaultSettings.List,
     editor: SettingsEditors.List
 });
 config.configureSettings<PaddingSettings>({
-    type: UiSettingsType.Padding,
+    type: 'Padding',
+    defaultValue: DefaultSettings.Padding,
     editor: SettingsEditors.Padding
 });
+config.configureSettings<MarginsSettings>({
+    type: 'Margins',
+    defaultValue: DefaultSettings.Margins,
+    editor: SettingsEditors.Margin
+});
 config.configureSettings<TextSettings>({
-    type: UiSettingsType.Text,
+    type: 'Text',
+    defaultValue: DefaultSettings.Text,
     editor: SettingsEditors.Text
 });
 
 config.configureElement<Container>({
-    type: UiElementType.Container,
-    defaultValue: new Container(),
-    settings: [ UiSettingsType.Container, UiSettingsType.Padding ],
+    type: 'Container',
     view: Views.Container
 });
 config.configureElement<Image>({
-    type: UiElementType.Image,
-    defaultValue: new Image(),
-    settings: [ UiSettingsType.Image ],
+    type: 'Image',
     view: Views.Image
 });
 config.configureElement<List>({
-    type: UiElementType.List,
-    defaultValue: new List(),
-    settings: [ UiSettingsType.List, UiSettingsType.Font, UiSettingsType.Padding ],
+    type: 'List',
     view: Views.List
 });
 config.configureElement<Text>({
-    type: UiElementType.Text,
-    defaultValue: new Text(),
-    settings: [ UiSettingsType.Text, UiSettingsType.Font, UiSettingsType.Padding ],
+    type: 'Text',
     view: Views.Text
 });
 

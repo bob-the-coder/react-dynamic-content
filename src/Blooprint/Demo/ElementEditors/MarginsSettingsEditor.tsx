@@ -1,16 +1,16 @@
-import React from 'react'
+﻿import React from 'react'
 import {Form, InputNumber, InputGroup, FlexboxGrid} from 'rsuite'
 import InputGroupAddon from 'rsuite/esm/InputGroup/InputGroupAddon'
 import {SettingsEditorProps} from "../../Base/BlooprintConfiguration";
-import {PaddingSettings} from "../Data/ExampleSettings";
+import {MarginsSettings} from "../Data/ExampleSettings";
 
 
 const step = 5;
 
-export default function MarginSettingsEditor(props: SettingsEditorProps<PaddingSettings>) {
+export default function MarginSettingsEditor(props: SettingsEditorProps<MarginsSettings>) {
     const { settings } = props;
-
-    function updatePadding(side: string, value: number) {
+    
+    function updateMargin(side: string, value: number) {
         props.updateSettings({[side]: value});
     }
 
@@ -22,7 +22,7 @@ export default function MarginSettingsEditor(props: SettingsEditorProps<PaddingS
                     <Form.Group>
                         <InputGroup {...{inline: 'true'}}>
                             <InputNumber value={settings.top} step={step}
-                                         onChange={value => updatePadding('top', +value)}/>
+                                         onChange={value => updateMargin('top', +value)}/>
                             <InputGroupAddon>px</InputGroupAddon>
                         </InputGroup>
                     </Form.Group>
@@ -31,7 +31,7 @@ export default function MarginSettingsEditor(props: SettingsEditorProps<PaddingS
                     <Form.ControlLabel>Bottom</Form.ControlLabel>
                     <InputGroup>
                         <InputNumber value={settings.bottom} step={step}
-                                     onChange={value => updatePadding('bottom', +value)}/>
+                                     onChange={value => updateMargin('bottom', +value)}/>
                         <InputGroupAddon>px</InputGroupAddon>
                     </InputGroup>
                 </Form.Group>
@@ -41,7 +41,7 @@ export default function MarginSettingsEditor(props: SettingsEditorProps<PaddingS
                     <Form.ControlLabel>Left</Form.ControlLabel>
                     <InputGroup>
                         <InputNumber value={settings.left} step={step}
-                                     onChange={value => updatePadding('left', +value)}/>
+                                     onChange={value => updateMargin('left', +value)}/>
                         <InputGroupAddon>px</InputGroupAddon>
                     </InputGroup>
                 </Form.Group>
@@ -49,7 +49,7 @@ export default function MarginSettingsEditor(props: SettingsEditorProps<PaddingS
                     <Form.ControlLabel>Right</Form.ControlLabel>
                     <InputGroup>
                         <InputNumber value={settings.right} step={step}
-                                     onChange={value => updatePadding('right', +value)}/>
+                                     onChange={value => updateMargin('right', +value)}/>
                         <InputGroupAddon>px</InputGroupAddon>
                     </InputGroup>
                 </Form.Group>
