@@ -22,7 +22,6 @@ export default function BlooprintBench(props: BlooprintBenchParams) {
                 <div className={'workspace-title'}>Content editor proof of concept</div>
                 <div className='workspace'>
                     <SimpleBar style={{maxHeight: '100%'}} className='workspace-editor'>
-                        <BlooprintEditor elementId={'000'} blooprint={blooprint} />
                         <BlooprintEditor elementId={root} blooprint={blooprint} />
                     </SimpleBar>
                     <div className='workspace-viewer'>

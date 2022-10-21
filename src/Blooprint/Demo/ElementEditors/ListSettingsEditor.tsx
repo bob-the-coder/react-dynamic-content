@@ -48,7 +48,7 @@ export default function ListSettingsEditor(props: SettingsEditorProps<ListSettin
     }
 
     return (
-        <Form.Group key={Math.random()}>
+        <Form.Group>
             <Form.Group>
                 <RadioGroup inline={true} onChange={(_) => updateOrderType(_.toString())} value={orderType}>
                     <Radio value='Ordered'>Ordered</Radio>

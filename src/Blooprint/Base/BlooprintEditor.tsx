@@ -3,6 +3,7 @@ import {Nav, Panel} from "rsuite";
 import './BlooprintEditor.css'
 import {useBlooprintSelector, BlooprintApi} from "./Redux/BlooprintApi";
 import BlooprintSettingsEditor from "./BlooprintSettingsEditor";
+import {useDispatch} from "react-redux";
 
 type BlooprintEditorProps = {
     elementId: string;
@@ -13,6 +14,7 @@ export default function BlooprintEditor(props: BlooprintEditorProps) {
     if (!props) return <></>;
     const {elementId, blooprint} = props;
     const element = useBlooprintSelector(state => state.elements[elementId]);
+    const dispatch = useDispatch();
 
     if (!element || !element.type) {
         return <h2>Broken editor</h2>
@@ -21,11 +23,13 @@ export default function BlooprintEditor(props: BlooprintEditorProps) {
     const [activeTab, setActiveTab] = useState(element.settings[0]);
 
     function highlight() {
-        // dispatch(blooprint.highlightElement({elementId: element.id}))
+        if (element.children.length) return;
+        dispatch(blooprint.highlightElement({elementId: element.id}))
     }
 
     function removeHighlight() {
-        // dispatch(blooprint.removeHighlight());
+        if (element.children.length) return;
+        dispatch(blooprint.removeHighlight());
     }
 
     return (

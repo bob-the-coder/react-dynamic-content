@@ -8,7 +8,6 @@ const h1 = {
 
 const textOne = DefaultElements.Text('From nested trees to personalized frameworks');
 textOne.settings.Font = {...textOne.settings.Font, ...h1};
-textOne.id = '000';
 
 const textTwo = DefaultElements.Text('Building a nested tree is fun');
 

@@ -22,7 +22,7 @@ export default function ContainerSettingsEditor(props: SettingsEditorProps<Conta
     }
     
     return (
-        <Form.Group key={Math.random()}>
+        <Form.Group>
             <Form.ControlLabel>Align inner elements</Form.ControlLabel>
             <RadioGroup value={settings.alignContent} onChange={align => updateSettings(align.toString())} inline={true}>
                 {alignOptions.map((option, i) => (

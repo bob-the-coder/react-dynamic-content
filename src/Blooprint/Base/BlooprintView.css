@@ -21,20 +21,30 @@
 
 .element-view--highlight {
     position: relative;
-    box-shadow: 0 0 0 1px var(--element-color);
+}
+
+.element-view::before {
+    transition: all ease-in-out .15s;
+    position: absolute;
+    content: '';
+    left: 50%;
+    top: 50%;
+    height: 0;
+    width: 0;
+    opacity: 0;
 }
 
 .element-view--highlight::before {
-    position: absolute;
-    content: '';
-    left: 0;
     top: 0;
+    left: 0;
     height: 100%;
     width: 100%;
     background-color: var(--element-color);
-    box-shadow: 0 0 0 20px var(--element-color);
-    opacity: 0.2;
-    z-index: -1;
+    box-shadow:
+            0 0 0 1px var(--element-color),
+            0 0 0 20px var(--element-color);
+    opacity: 0.3;
+    border-radius: 10px;
 }
 
 .element-view--container {

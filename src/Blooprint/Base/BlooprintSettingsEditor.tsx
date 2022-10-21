@@ -13,16 +13,20 @@ export default function (props: BlooprintSettingsEditorProps) {
     const {blooprint, elementId, type} = props;
     const dispatch = useDispatch();
 
-    function updateSettings(settings: BlooprintSettings) {
-        settings.type = type;
-        dispatch(blooprint.updateSettings({
-            elementId,
-            settings
-        }));
-    }
-
     const SettingsEditor = blooprint.config.settingsConfig[type].editor;
     const settings = useBlooprintSelector(state => state.settings[`${elementId}_${type}`]);
 
-    return <SettingsEditor settings={settings} blooprint={blooprint} updateSettings={updateSettings}/>
+    return (
+        <SettingsEditor
+            settings={settings}
+            blooprint={blooprint}
+            updateSettings={settings => dispatch(blooprint.updateSettings({
+                elementId,
+                settings: {
+                    ...settings,
+                    type
+                }
+            }))}
+        />
+    );
 }

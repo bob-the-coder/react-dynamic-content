@@ -15,7 +15,7 @@ export default function MarginSettingsEditor(props: SettingsEditorProps<MarginsS
     }
 
     return (
-        <FlexboxGrid justify='space-between' key={Math.random()}>
+        <FlexboxGrid justify='space-between'>
             <FlexboxGrid.Item colspan={11}>
                 <Form.Group>
                     <Form.ControlLabel>Top</Form.ControlLabel>

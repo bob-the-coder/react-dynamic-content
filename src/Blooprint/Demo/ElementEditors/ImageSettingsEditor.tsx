@@ -14,7 +14,7 @@ export default function ImageSettingsEditor(props: SettingsEditorProps<ImageSett
     }
 
     return (
-        <Form.Group key={Math.random()}>
+        <Form.Group>
             <Form.Group>
                 <Form.ControlLabel>Url</Form.ControlLabel>
                 <Input value={settings.url} onChange={updateUrl}/>

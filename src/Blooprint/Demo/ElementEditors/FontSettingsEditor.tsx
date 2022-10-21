@@ -22,7 +22,7 @@ export default function FontSettingsEditor(props: SettingsEditorProps<FontSettin
     }
 
     return (
-        <Form.Group key={Math.random()}>
+        <Form.Group>
             <Form.Group>
                 <Form.ControlLabel>Size</Form.ControlLabel>
                 <InputGroup>

@@ -24,10 +24,13 @@ const BlooprintView: BlooprintView = (props: BlooprintViewProps) => {
     let className = `element-view element-view--${element.type.toLowerCase()}`;
 
     const highlightedElement = useBlooprintSelector(state => state.highlightedElement);
-    if (element.id === highlightedElement) {
-        className += ' element-view--highlight';
-    } else if (highlightedElement && !element.children.length) {
-        className += ' element-view--obstructed';
+    
+    if (highlightedElement && !element.children.length){
+        if (element.id === highlightedElement) {
+            className += ' element-view--highlight';
+        } else {
+            className += ' element-view--obstructed';
+        }
     }
 
     const ElementView = blooprint.config.elementConfig[element.type].view;
