@@ -17,9 +17,21 @@ export type SettingsConfiguration<T extends BlueprintSettings> = {
     editor: SettingsEditorProvider<T>
 }
 
+export type ElementActionConfig = {
+    label: string;
+    action: (props: ElementActionProps) => any;
+}
+
+
+export type ElementActionProps = {
+    blueprint: BlueprintApi;
+    element: BlueprintElement;
+}
+
 export type BlueprintElementConfiguration<T extends BlueprintElement> = {
     type: string;
-    view: FunctionComponent<ElementViewProps<T>>
+    view: FunctionComponent<ElementViewProps<T>>;
+    actions?: ElementActionConfig[];
 }
 
 class BlueprintConfiguration {

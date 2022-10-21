@@ -1,4 +1,6 @@
-﻿export type BlueprintSettingsPartial = {[key: string]: any}
+﻿import {ElementActionProps} from "./BlueprintConfiguration";
+
+export type BlueprintSettingsPartial = {[key: string]: any}
 
 export type BlueprintSettings = BlueprintSettingsPartial & {
     type: string;

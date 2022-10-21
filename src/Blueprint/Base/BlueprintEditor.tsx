@@ -1,13 +1,15 @@
 import React, {useState} from 'react';
-import {Nav, Panel} from "rsuite";
+import {Button, Nav, Panel} from "rsuite";
 import './BlueprintEditor.css'
 import {useBlueprintSelector, BlueprintApi} from "./Redux/BlueprintApi";
 import BlueprintSettingsEditor from "./BlueprintSettingsEditor";
 import {useDispatch} from "react-redux";
+import {ElementActionConfig, ElementActionProps} from "./BlueprintConfiguration";
 
 type BlueprintEditorProps = {
     elementId: string;
-    blueprint: BlueprintApi
+    blueprint: BlueprintApi;
+    actions?: ElementActionConfig[];
 }
 
 export default function BlueprintEditor(props: BlueprintEditorProps) {
@@ -56,7 +58,12 @@ export default function BlueprintEditor(props: BlueprintEditorProps) {
                 ))}
             </div>
             <div className="element-editor--actions">
-                Actions go here
+                {!props.actions 
+                    ? <></>
+                    : props.actions.map(action => (
+                        <Button key={action.label}>{action.label}</Button>
+                    ))
+                }
             </div>
         </div>
     );

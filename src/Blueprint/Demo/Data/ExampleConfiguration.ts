@@ -59,7 +59,16 @@ config.configureSettings<PositionSettings>({
 
 config.configureElement<Container>({
     type: 'Container',
-    view: Views.Container
+    view: Views.Container,
+    actions: [
+        {
+            label: 'Add Text',
+            action: (props) => props.blueprint.addChildElement({
+                parentId: props.element.id,
+                element: DefaultElements.Text
+            })
+        }
+    ]
 });
 config.configureElement<Image>({
     type: 'Image',

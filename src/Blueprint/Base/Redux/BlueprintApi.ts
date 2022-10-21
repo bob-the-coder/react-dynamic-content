@@ -14,9 +14,9 @@ type UpdateSettingsAction = {
     settings: BlueprintSettingsPartial;
 }
 
-type AddElementAction = {
+type AddElementAction<T extends BlueprintElement> = {
     parentId: string;
-    element: BlueprintElement;
+    element: T;
 }
 
 type ElementAction = {
@@ -68,9 +68,9 @@ type BlueprintState = {
     highlightedElement?: string;
 }
 
-type BlueprintReducer = {
+type BlueprintReducer<TState> = {
     updateSettings: (state: BlueprintState, action: PayloadAction<UpdateSettingsAction>) => any;
-    addChildElement: (state: BlueprintState, action: PayloadAction<AddElementAction>) => any;
+    addChildElement: <T extends BlueprintElement>(state: BlueprintState, action: PayloadAction<AddElementAction<T>>) => any;
     removeElement: (state: BlueprintState, action: PayloadAction<ElementAction>) => any;
     highlightElement: (state: BlueprintState, action: PayloadAction<ElementAction>) => any;
     removeHighlight: (state: BlueprintState, action: PayloadAction) => any;
@@ -86,7 +86,7 @@ const buildSlice = (config: BlueprintConfiguration, value: BlueprintElement) => 
     
     const root = getRoot(elementMap);
 
-    return createSlice<BlueprintState, BlueprintReducer>({
+    return createSlice<BlueprintState, BlueprintReducer<BlueprintState>>({
         name: 'blueprint',
         initialState: {
             elements: elementMap,
@@ -105,7 +105,7 @@ const buildSlice = (config: BlueprintConfiguration, value: BlueprintElement) => 
                 
                 Object.keys(settings).forEach(property => state.settings[settingsKey][property] = settings[property]);
             },
-            addChildElement: (state, action: PayloadAction<AddElementAction>) => {
+            addChildElement: <T extends BlueprintElement>(state, action: PayloadAction<AddElementAction<T>>) => {
                 const {parentId, element} = action.payload;
                 if (!parentId) throw new Error('Parent element id is missing.');
                 if (!state.elements.hasOwnProperty(parentId)) throw new Error(`Invalid parent element id "${parentId}".`);

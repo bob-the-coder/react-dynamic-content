@@ -4,7 +4,7 @@ import {SettingsEditorProps} from "../../Base/BlueprintConfiguration";
 import {FontSettings} from "../Data/ExampleSettings";
 
 const fontWeights = [ 'Normal', 'Bold' ];
-const colors = [ 'White', 'Black', 'Red', 'Blue', 'Green' ];
+const colors = [ 'White', 'Black', 'Red', 'Blue', 'Green' ,'Purple', 'Pink' ];
 
 export default function FontSettingsEditor(props: SettingsEditorProps<FontSettings>) {
     const { settings} = props;
